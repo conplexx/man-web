@@ -1,0 +1,10 @@
+Registro
+<form>
+    CPF: <input #cpf type="text" /><br/>
+    Nome: <input #nome type="text" /><br/>
+    E-mail: <input #email type="text" /><br/>
+    <input type="button" value="testar" 
+        (click)="testarBotao(1)" />
+    <br/><br/>
+    Resultado: <input type="text" [value]="resultado" readonly/>
+</form>
