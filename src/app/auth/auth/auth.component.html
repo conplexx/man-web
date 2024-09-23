@@ -1,10 +1,68 @@
-Registro
-<form>
-    CPF: <input #cpf type="text" /><br/>
-    Nome: <input #nome type="text" /><br/>
-    E-mail: <input #email type="text" /><br/>
-    <input type="button" value="testar" 
-        (click)="testarBotao(1)" />
-    <br/><br/>
-    Resultado: <input type="text" [value]="resultado" readonly/>
-</form>
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-6">
+            <h2>Registro</h2>
+            <form>
+                <div class="mb-3">
+                    <label for="cpf" class="form-label">CPF</label>
+                    <input #cpf id="cpf" type="text" class="form-control" mask="000.000.000-00" />
+                </div>
+                <div class="mb-3">
+                    <label for="nome" class="form-label">Nome</label>
+                    <input #nome id="nome" type="text" class="form-control" />
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">E-mail</label>
+                    <input #email id="email" type="email" class="form-control" />
+                </div>
+                <div class="mb-3">
+                    <label for="phone" class="form-label">Telefone</label>
+                    <input #phone id="phone" type="text" class="form-control" mask="(00)00000-0000" />
+                </div>    
+            </form>
+        </div>
+
+        <div class="col-md-6">
+          <h2>Endereço</h2>
+          <form>
+                <div class="mb-3">
+                    <label for="cep" class="form-label">CEP</label>
+                    <input #cep id="cep" type="text" class="form-control" [(ngModel)]="cep" (ngModelChange)="onCepChange()" mask="00000-000" />
+                </div>
+        
+                <div class="mb-3">
+                    <label for="street" class="form-label">Rua</label>
+                    <input #street id="street" type="text" class="form-control" />
+                </div>
+        
+                <div class="mb-3">
+                    <label for="number" class="form-label">Número</label>
+                    <input #number id="number" type="text" class="form-control" required />
+                </div>
+        
+                <div class="mb-3">
+                    <label for="neighborhood" class="form-label">Bairro</label>
+                    <input #neighborhood id="neighborhood" type="text" class="form-control" required />
+                </div>
+        
+                <div class="mb-3">
+                    <label for="city" class="form-label">Cidade</label>
+                    <input #city id="city" type="text" class="form-control" required />
+                </div>
+        
+                <div class="mb-3">
+                    <label for="state" class="form-label">Estado</label>
+                    <input #state id="state" type="text" maxlength="2" class="form-control" required />
+                </div>
+        
+                <div class="mb-3">
+                    <label for="country" class="form-label">País</label>
+                    <input #country id="country" type="text" class="form-control" required />
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- <button type="button" class="btn btn-primary" (click)="testarBotao(1)">Testar</button> -->
+    
+</div>
