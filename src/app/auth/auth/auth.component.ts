@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthService, ViaCepResponse } from '../../services';
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
+import { FormsModule } from '@angular/forms';  // Import FormsModule here
 
 @Component({
   selector: 'app-auth',
@@ -38,5 +39,4 @@ export class AuthComponent {
     get resultado(): string {
         return "a";
     }
-
 }

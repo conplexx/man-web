@@ -27,7 +27,8 @@
           <form>
                 <div class="mb-3">
                     <label for="cep" class="form-label">CEP</label>
-                    <input #cep id="cep" type="text" class="form-control" [(ngModel)]="cep" (ngModelChange)="onCepChange()" mask="00000-000" />
+                    <!-- <input #cepInput id="cep" type="text" class="form-control" [(ngModel)]="cep" (ngModelChange)="onCepChange()" mask="00000-000" /> -->
+                    <input #cep id="cep" type="text" class="form-control" mask="00000-000" />
                 </div>
         
                 <div class="mb-3">
