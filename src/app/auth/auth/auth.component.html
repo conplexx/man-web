@@ -2,68 +2,104 @@
     <div class="row">
         <div class="col-md-6">
             <h2>Registro</h2>
-            <form>
+            <form [formGroup]="userForm">
                 <div class="mb-3">
                     <label for="cpf" class="form-label">CPF</label>
-                    <input #cpf id="cpf" type="text" class="form-control" mask="000.000.000-00" />
+                    <input id="cpf" formControlName="cpf" type="text" class="form-control" mask="000.000.000-00" />
                 </div>
+                <div *ngIf="userCpf?.invalid && (userCpf?.dirty || userCpf?.touched)">
+                    <small *ngIf="userCpf?.errors??['required']">CPF é obrigatório.</small>
+                </div>
+
                 <div class="mb-3">
                     <label for="nome" class="form-label">Nome</label>
-                    <input #nome id="nome" type="text" class="form-control" />
+                    <input id="nome" formControlName="nome" type="text" class="form-control" />
                 </div>
+                <div *ngIf="userName?.invalid && (userName?.dirty || userName?.touched)">
+                    <small *ngIf="userName?.errors??['required']">Nome é obrigatório.</small>
+                </div>
+
                 <div class="mb-3">
                     <label for="email" class="form-label">E-mail</label>
-                    <input #email id="email" type="email" class="form-control" />
+                    <input id="email" formControlName="email" type="email" class="form-control" />
                 </div>
+                <div *ngIf="userEmail?.invalid && (userEmail?.dirty || userEmail?.touched)">
+                    <small *ngIf="userEmail?.errors??['required']">E-mail é obrigatório.</small>
+                    <small *ngIf="userEmail?.errors??['email']">E-mail inválido.</small>
+                </div>
+
                 <div class="mb-3">
                     <label for="phone" class="form-label">Telefone</label>
-                    <input #phone id="phone" type="text" class="form-control" mask="(00)00000-0000" />
-                </div>    
+                    <input id="phone" formControlName="phone" type="text" class="form-control" mask="(00)00000-0000" />
+                </div>
+                <div *ngIf="userPhone?.invalid && (userPhone?.dirty || userPhone?.touched)">
+                    <small *ngIf="userPhone?.errors??['required']">Telefone é obrigatório.</small>
+                </div>
             </form>
         </div>
 
         <div class="col-md-6">
           <h2>Endereço</h2>
-          <form>
+          <form [formGroup]="addressForm">
                 <div class="mb-3">
                     <label for="cep" class="form-label">CEP</label>
-                    <!-- <input #cepInput id="cep" type="text" class="form-control" [(ngModel)]="cep" (ngModelChange)="onCepChange()" mask="00000-000" /> -->
-                    <input #cep id="cep" type="text" class="form-control" mask="00000-000" />
+                    <input id="cep" formControlName="cep" type="text" class="form-control" name="cep"
+                            mask="00000-000" (change)="onCepChange()" required
+                    />
+                    <h2>{{addressZipCode?.value}}</h2>
                 </div>
-        
-                <div class="mb-3">
-                    <label for="street" class="form-label">Rua</label>
-                    <input #street id="street" type="text" class="form-control" />
+                <div *ngIf="addressZipCode?.invalid && (addressZipCode?.dirty || addressZipCode?.touched)">
+                    <small *ngIf="addressZipCode?.errors??['required']">CEP é obrigatório.</small>
                 </div>
-        
-                <div class="mb-3">
-                    <label for="number" class="form-label">Número</label>
-                    <input #number id="number" type="text" class="form-control" required />
-                </div>
-        
-                <div class="mb-3">
-                    <label for="neighborhood" class="form-label">Bairro</label>
-                    <input #neighborhood id="neighborhood" type="text" class="form-control" required />
-                </div>
-        
-                <div class="mb-3">
-                    <label for="city" class="form-label">Cidade</label>
-                    <input #city id="city" type="text" class="form-control" required />
-                </div>
-        
+
                 <div class="mb-3">
                     <label for="state" class="form-label">Estado</label>
-                    <input #state id="state" type="text" maxlength="2" class="form-control" required />
+                    <input id="state" type="text" maxlength="2" class="form-control" formControlName="state" required />
                 </div>
-        
+                <div *ngIf="addressState?.invalid && (addressState?.dirty || addressState?.touched)">
+                    <small *ngIf="addressState?.errors??['required']">Estado é obrigatório.</small>
+                </div>
+
                 <div class="mb-3">
-                    <label for="country" class="form-label">País</label>
-                    <input #country id="country" type="text" class="form-control" required />
+                    <label for="city" class="form-label">Cidade</label>
+                    <input id="city" type="text" class="form-control" formControlName="city" required />
+                </div>
+                <div *ngIf="addressCity?.invalid && (addressCity?.dirty || addressCity?.touched)">
+                    <small *ngIf="addressCity?.errors??['required']">Cidade é obrigatório.</small>
+                </div>
+
+                <div class="mb-3">
+                    <label for="neighborhood" class="form-label">Bairro</label>
+                    <input id="neighborhood" type="text" class="form-control" formControlName="neighborhood" required />
+                </div>
+                <div *ngIf="addressNeighborhood?.invalid && (addressNeighborhood?.dirty || addressNeighborhood?.touched)">
+                    <small *ngIf="addressNeighborhood?.errors??['required']">Bairro é obrigatório.</small>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="street" class="form-label">Rua</label>
+                    <input id="street" type="text" class="form-control" formControlName="street" required />
+                </div>
+                <div *ngIf="addressStreet?.invalid && (addressStreet?.dirty || addressStreet?.touched)">
+                    <small *ngIf="addressStreet?.errors??['required']">Rua é obrigatório.</small>
+                </div>
+
+                <div class="mb-3">
+                    <label for="number" class="form-label">Nome</label>
+                    <input id="number" type="number" class="form-control" required/>
+                </div>
+                <div *ngIf="addressNumber?.invalid && (addressNumber?.dirty || addressNumber?.touched)">
+                    <small *ngIf="addressNumber?.errors??['required']">Número é obrigatório.</small>
+                </div>
+
+                <div class="mb-3">
+                    <label for="complement" class="form-label">Complemento</label>
+                    <input id="complement" type="text" class="form-control" formControlName="complement" /> 
                 </div>
             </form>
         </div>
     </div>
 
-    <!-- <button type="button" class="btn btn-primary" (click)="testarBotao(1)">Testar</button> -->
+    <button type="submit" class="btn btn-primary" (click)="onSubmit()" [disabled]="userForm.invalid">Cadastrar</button>
     
 </div>
