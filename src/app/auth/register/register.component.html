@@ -42,11 +42,11 @@
           <h2>Endereço</h2>
           <form [formGroup]="addressForm">
                 <div class="mb-3">
-                    <label for="cep" class="form-label">CEP</label>
-                    <input id="cep" formControlName="cep" type="text" class="form-control" name="cep"
+                    <label for="zipCode" class="form-label">CEP</label>
+                    <input id="zipCode" formControlName="zipCode" type="text" class="form-control"
                             mask="00000-000" (change)="onCepChange()" required
                     />
-                    <h2>{{addressZipCode?.value}}</h2>
+                    <!-- <h2>{{addressZipCode?.value}}</h2> -->
                 </div>
                 <div *ngIf="addressZipCode?.invalid && (addressZipCode?.dirty || addressZipCode?.touched)">
                     <small *ngIf="addressZipCode?.errors??['required']">CEP é obrigatório.</small>
@@ -54,7 +54,7 @@
 
                 <div class="mb-3">
                     <label for="state" class="form-label">Estado</label>
-                    <input id="state" type="text" maxlength="2" class="form-control" formControlName="state" required />
+                    <input id="state" formControlName="state" type="text" maxlength="2" class="form-control" required />
                 </div>
                 <div *ngIf="addressState?.invalid && (addressState?.dirty || addressState?.touched)">
                     <small *ngIf="addressState?.errors??['required']">Estado é obrigatório.</small>
@@ -62,7 +62,7 @@
 
                 <div class="mb-3">
                     <label for="city" class="form-label">Cidade</label>
-                    <input id="city" type="text" class="form-control" formControlName="city" required />
+                    <input id="city" formControlName="city" type="text" class="form-control" required />
                 </div>
                 <div *ngIf="addressCity?.invalid && (addressCity?.dirty || addressCity?.touched)">
                     <small *ngIf="addressCity?.errors??['required']">Cidade é obrigatório.</small>
@@ -70,23 +70,23 @@
 
                 <div class="mb-3">
                     <label for="neighborhood" class="form-label">Bairro</label>
-                    <input id="neighborhood" type="text" class="form-control" formControlName="neighborhood" required />
+                    <input id="neighborhood" formControlName="neighborhood" type="text" class="form-control" required />
                 </div>
                 <div *ngIf="addressNeighborhood?.invalid && (addressNeighborhood?.dirty || addressNeighborhood?.touched)">
                     <small *ngIf="addressNeighborhood?.errors??['required']">Bairro é obrigatório.</small>
                 </div>
                 
                 <div class="mb-3">
-                    <label for="street" class="form-label">Rua</label>
-                    <input id="street" type="text" class="form-control" formControlName="street" required />
+                    <label for="street" class="form-label">Logradouro</label>
+                    <input id="street" formControlName="street" type="text" class="form-control" required />
                 </div>
                 <div *ngIf="addressStreet?.invalid && (addressStreet?.dirty || addressStreet?.touched)">
                     <small *ngIf="addressStreet?.errors??['required']">Rua é obrigatório.</small>
                 </div>
 
                 <div class="mb-3">
-                    <label for="number" class="form-label">Nome</label>
-                    <input id="number" type="number" class="form-control" required/>
+                    <label for="number" class="form-label">Número</label>
+                    <input id="number" formControlName="number" type="number" class="form-control" required/>
                 </div>
                 <div *ngIf="addressNumber?.invalid && (addressNumber?.dirty || addressNumber?.touched)">
                     <small *ngIf="addressNumber?.errors??['required']">Número é obrigatório.</small>
@@ -94,7 +94,7 @@
 
                 <div class="mb-3">
                     <label for="complement" class="form-label">Complemento</label>
-                    <input id="complement" type="text" class="form-control" formControlName="complement" /> 
+                    <input id="complement" formControlName="complement" type="text" class="form-control" /> 
                 </div>
             </form>
         </div>

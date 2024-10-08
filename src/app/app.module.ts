@@ -5,6 +5,8 @@ import { provideNgxMask, NgxMaskDirective } from 'ngx-mask';
 import { AppRoutingModule } from './app-routing.module';
 import { provideHttpClient } from '@angular/common/http';
 import { AppComponent } from './app.component';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { TokenInterceptor } from './auth/access-token/token.interceptor';
 
 @NgModule({
   declarations: [
@@ -18,9 +20,9 @@ import { AppComponent } from './app.component';
     ReactiveFormsModule
   ],
   providers: [
+    // { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
     provideHttpClient(),
     provideNgxMask(),
-    // AuthGuard
   ],
   bootstrap: [AppComponent]
 })

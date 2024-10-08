@@ -62,7 +62,7 @@ export class RegisterComponent {
         return this.addressForm.get('zipCode');
     }
     getUnmaskedZipCode(): string {
-        const zip = this.userForm.get('zipCode');
+        const zip = this.addressForm.get('zipCode');
         return zip ? zip.value.replace(/\D/g, '') : '';
     }
     get addressStreet() {
@@ -85,7 +85,7 @@ export class RegisterComponent {
     }
 
     onCepChange(): void {
-        console.log("change", this.addressZipCode);
+        console.log("change", this.getUnmaskedZipCode());
         this.authService.getCepInfo(this.getUnmaskedZipCode()).subscribe((data: ViaCepResponse) => {
             this.addressForm.patchValue({
                 street: data.logradouro,
@@ -101,22 +101,22 @@ export class RegisterComponent {
         if(!this.addressForm.valid || !this.userForm.valid){
             return;
         }
-        const addressFields = this.addressForm.value;
+        const addressForm = this.addressForm.value;
         const addressDto = new AddressDto(
-            addressFields.zipCode,
-            addressFields.state,
-            addressFields.city,
-            addressFields.neighborhood,
-            addressFields.street,
-            addressFields.number,
-            addressFields.complement
+            addressForm.zipCode,
+            addressForm.state,
+            addressForm.city,
+            addressForm.neighborhood,
+            addressForm.street,
+            addressForm.number,
+            addressForm.complement
         );
-        const userFields = this.userForm.value;
+        const userForm = this.userForm.value;
         const userDto = new UserRegisterDto(
-            userFields.cpf,
-            userFields.name,
-            userFields.email,
-            userFields.phone,
+            userForm.cpf,
+            userForm.name,
+            userForm.email,
+            userForm.phone,
             addressDto
         );
         this.authService.register(userDto).subscribe((response: HttpResponse<any>) => {

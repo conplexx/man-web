@@ -1,0 +1,34 @@
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-6">
+            <h2>Login</h2>
+            <form [formGroup]="form">
+                <div class="mb-3">
+                    <label for="equipmentDescription" class="form-label">Descrição do equipamento</label>
+                    <input id="equipmentDescription" formControlName="equipmentDescription" type="equipmentDescription" class="form-control" />
+                </div>
+                <div *ngIf="equipmentDescription?.invalid && (equipmentDescription?.dirty || equipmentDescription?.touched)">
+                    <small *ngIf="equipmentDescription?.errors??['required']">A descrição do equipamento é obrigatória.</small>
+                </div>
+
+                <div class="mb-3">
+                    <select (change)="onEquipmentCategoryChange($event)">
+                        <option *ngFor="let category of equipmentCategories" [value]="category.id">
+                            {{ category.name }}
+                        </option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label for="failureDescription" class="form-label">Senha</label>
+                    <input id="failureDescription" formControlName="failureDescription" type="failureDescription" class="form-control" />
+                </div>
+                <div *ngIf="failureDescription?.invalid && (failureDescription?.dirty || failureDescription?.touched)">
+                    <small *ngIf="failureDescription?.errors??['required']">A descrição da falha é obrigatória.</small>
+                </div>
+
+                <button type="submit" class="btn btn-primary" (click)="onSubmit()" [disabled]="(form.invalid || equipmentCategoryId === undefined)">Cadastrar</button>
+            </form>
+        </div>
+    </div>
+</div>

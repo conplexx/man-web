@@ -12,9 +12,5 @@ import { Router } from '@angular/router';
     styleUrl: './app.component.css'
 })
 export class AppComponent {
-    constructor(private router: Router) {}
-
-    isHome(): boolean {
-        return this.router.url === '/';
-    }
+    constructor() {}
 }

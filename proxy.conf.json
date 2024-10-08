@@ -1,0 +1,12 @@
+{
+    "https://viacep.com.br": {
+      "target": "https://viacep.com.br",
+      "secure": false,
+      "changeOrigin": true,
+      "logLevel": "debug"
+    },
+    "/api": {
+        "target": "http://localhost:8080/api",
+        "secure": false
+      }
+  }
