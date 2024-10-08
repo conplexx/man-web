@@ -1,23 +1,29 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService, ViaCepResponse } from '../../services';
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 import { NgForm, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { ViaCepResponse } from '../../model/via-cep-response.model';
+import { AddressDto } from '../../dtos/address-dto';
+import { UserRegisterDto } from '../../dtos/user-register-dto';
+import { Observable } from 'rxjs';
+import { HttpResponse } from '@angular/common/http';
+import { Router } from '@angular/router';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-auth',
   standalone: true,
   imports: [NgxMaskDirective, FormsModule, ReactiveFormsModule, CommonModule],
-  templateUrl: './auth.component.html',
-  styleUrl: './auth.component.css',
+  templateUrl: './register.component.html',
+  styleUrl: './register.component.css',
   providers: [provideNgxMask()]
 })
 
-export class AuthComponent {
+export class RegisterComponent {
     userForm: FormGroup;
     addressForm: FormGroup;
     
-    constructor(private authService: AuthService, private formBuilder: FormBuilder) {
+    constructor(private authService: AuthService, private formBuilder: FormBuilder, private router: Router) {
         this.userForm = this.formBuilder.group({
             cpf:    ['', Validators.required],
             name:   ['', Validators.required],
@@ -91,7 +97,35 @@ export class AuthComponent {
         });
     }
 
-      onSubmit() {
-        console.log(this.userForm.value);
-      }
+    onSubmit() {
+        if(!this.addressForm.valid || !this.userForm.valid){
+            return;
+        }
+        const addressFields = this.addressForm.value;
+        const addressDto = new AddressDto(
+            addressFields.zipCode,
+            addressFields.state,
+            addressFields.city,
+            addressFields.neighborhood,
+            addressFields.street,
+            addressFields.number,
+            addressFields.complement
+        );
+        const userFields = this.userForm.value;
+        const userDto = new UserRegisterDto(
+            userFields.cpf,
+            userFields.name,
+            userFields.email,
+            userFields.phone,
+            addressDto
+        );
+        this.authService.register(userDto).subscribe((response: HttpResponse<any>) => {
+            if(response.status === 201){
+                this.router.navigate(['/auth/login']);
+            }
+            else {
+                //TODO lidar
+            }
+        });
+    }
 }
