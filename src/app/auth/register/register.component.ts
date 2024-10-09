@@ -1,19 +1,20 @@
-import { Component, OnInit } from '@angular/core';
-import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
-import { NgForm, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { ViaCepResponse } from '../../model/via-cep-response.model';
+import { HttpResponse } from '@angular/common/http';
+import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 import { AddressDto } from '../../dtos/address-dto';
 import { UserRegisterDto } from '../../dtos/user-register-dto';
-import { Observable } from 'rxjs';
-import { HttpResponse } from '@angular/common/http';
-import { Router } from '@angular/router';
+import { BaseResponse, BaseResponseType, ErrorBaseResponse } from '../../model/base-response.model';
+import { User } from '../../model/user.model';
+import { ViaCepResponse } from '../../model/via-cep-response.model';
 import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-auth',
   standalone: true,
-  imports: [NgxMaskDirective, FormsModule, ReactiveFormsModule, CommonModule],
+  imports: [NgxMaskDirective, ReactiveFormsModule, CommonModule],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css',
   providers: [provideNgxMask()]
@@ -85,15 +86,15 @@ export class RegisterComponent {
     }
 
     onCepChange(): void {
-        console.log("change", this.getUnmaskedZipCode());
-        this.authService.getCepInfo(this.getUnmaskedZipCode()).subscribe((data: ViaCepResponse) => {
-            this.addressForm.patchValue({
-                street: data.logradouro,
-                neighborhood: data.bairro,
-                state: data.uf,
-                city: data.localidade,
-            });
-            console.log("setvalue", data);
+        this.authService.getCepInfo(this.getUnmaskedZipCode()).subscribe((data?: ViaCepResponse) => {
+            if(data){
+                this.addressForm.patchValue({
+                    state: data.uf,
+                    city: data.localidade,
+                    neighborhood: data.bairro,
+                    street: data.logradouro,
+                });
+            }
         });
     }
 
@@ -119,12 +120,15 @@ export class RegisterComponent {
             userForm.phone,
             addressDto
         );
-        this.authService.register(userDto).subscribe((response: HttpResponse<any>) => {
+        this.authService.register(userDto).subscribe((response: HttpResponse<BaseResponse<User>>) => {
             if(response.status === 201){
                 this.router.navigate(['/auth/login']);
             }
             else {
-                //TODO lidar
+                if(response?.body?.type === BaseResponseType.ERROR){
+                    const errorResponse = response.body as ErrorBaseResponse;
+                    console.log(errorResponse.errorMessage);
+                }
             }
         });
     }

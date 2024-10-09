@@ -12,8 +12,8 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="nome" class="form-label">Nome</label>
-                    <input id="nome" formControlName="nome" type="text" class="form-control" />
+                    <label for="name" class="form-label">Nome</label>
+                    <input id="name" formControlName="name" type="text" class="form-control" />
                 </div>
                 <div *ngIf="userName?.invalid && (userName?.dirty || userName?.touched)">
                     <small *ngIf="userName?.errors??['required']">Nome é obrigatório.</small>
@@ -100,6 +100,6 @@
         </div>
     </div>
 
-    <button type="submit" class="btn btn-primary" (click)="onSubmit()" [disabled]="userForm.invalid">Cadastrar</button>
+    <button type="submit" class="btn btn-primary" (click)="onSubmit()" [disabled]="(userForm.invalid || addressForm.invalid)">Cadastrar</button>
     
 </div>
