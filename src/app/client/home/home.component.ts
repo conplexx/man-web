@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { DataResponse } from '../../model/base-response.model';
 import { Order } from '../../model/order.model';
 import { ClientService } from '../client.service';
 
@@ -14,8 +15,10 @@ export class HomeComponent {
   orders: Order[] = [];
 
   constructor(private clientService: ClientService) {
-    this.clientService.getHome().subscribe(orders => {
-      this.orders = orders;
+    this.clientService.getHome().subscribe(res => {
+        if(res instanceof DataResponse) {
+            // res.data;
+        }
     });
   }
 }

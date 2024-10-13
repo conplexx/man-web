@@ -1,5 +1,7 @@
+import { HttpResponse } from "@angular/common/http";
 import { ClientOrderState } from "../enum/ClientOrderState";
 import { Budget } from "./budget.model";
+import { BaseResponse, DataResponse } from "./base-response.model";
 
 export class Order {
     constructor (

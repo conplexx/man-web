@@ -5,15 +5,17 @@ import { catchError, Observable, retry, throwError } from 'rxjs';
 import { UserLoginDto } from '../dtos/user-login-dto';
 import { UserRegisterDto } from '../dtos/user-register-dto';
 import { AccessToken } from '../model/access-token.model';
-import { AuthResponse } from '../model/auth-reponse.model';
+import { Auth } from '../model/auth.model';
 import { ViaCepResponse } from '../model/via-cep-response.model';
+import { Client, ClientResponse } from '../model/client.model';
+import { BaseResponse } from '../model/base-response.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  url = 'localhost:8080/api/auth';
-  registerUrl = `${this.url}/autocadastro`;
+  url = 'http://localhost:8080/api/auth';
+  registerUrl = `${this.url}/client-register`;
   loginUrl = `${this.url}/login`;
   refreshTokenUrl = `${this.url}/refresh-token`;
 
@@ -22,22 +24,22 @@ export class AuthService {
   private refreshTokenKey = 'refresh-token';
 
   httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+    headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }),
   }
 
   constructor(private http: HttpClient) {}
 
-  register(registerDto: UserRegisterDto): Observable<any> {
-    return this.http.post<any>(this.registerUrl, JSON.stringify(registerDto), this.httpOptions).pipe(retry(1), catchError(this.handleError));
+  registerClient(registerDto: UserRegisterDto): Observable<BaseResponse<Client>> {
+    return this.http.post<BaseResponse<Client>>(this.registerUrl, JSON.stringify(registerDto), this.httpOptions).pipe(retry(1), catchError(this.handleError));
   }
 
-  login(loginDto: UserLoginDto): Observable<AuthResponse> {
-    return this.http.post<AuthResponse>(this.loginUrl, JSON.stringify(loginDto), this.httpOptions).pipe(retry(1), catchError(this.handleError));
+  login(loginDto: UserLoginDto): Observable<BaseResponse<Auth>> {
+    return this.http.post<BaseResponse<Auth>>(this.loginUrl, JSON.stringify(loginDto), this.httpOptions).pipe(retry(1), catchError(this.handleError));
   }
 
   getCepInfo(cep: string): Observable<ViaCepResponse> {
     const url = `https://viacep.com.br/ws/${cep}/json/`;
-    return this.http.get<any>(url);
+    return this.http.get<ViaCepResponse>(url);
   }
 
   postRefreshToken(accessToken: AccessToken): Observable<AccessToken> {

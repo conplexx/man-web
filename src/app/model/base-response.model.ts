@@ -5,24 +5,24 @@ export enum BaseResponseType{
 }
 
 //sem dados e sem erro
-export class EmptyBaseResponse {
+export class EmptyResponse {
     constructor(
         public type: BaseResponseType = BaseResponseType.EMPTY,
     ) {}
 }
 
-export class DataBaseResponse<T> {
+export class DataResponse<T> {
     constructor(
         public type: BaseResponseType = BaseResponseType.DATA,
         public data: T
     ) {}
 }
 
-export class ErrorBaseResponse {
+export class ErrorResponse {
     constructor(
         public type: BaseResponseType = BaseResponseType.ERROR,
         public errorMessage: string
     ) {}
 }
 
-export type BaseResponse<T> = EmptyBaseResponse | DataBaseResponse<T> | ErrorBaseResponse;
+export type BaseResponse<T> = EmptyResponse | DataResponse<T> | ErrorResponse;

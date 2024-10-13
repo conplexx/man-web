@@ -6,9 +6,9 @@ import { authGuard } from './auth/auth.guard';
 import { HomeComponent } from './client/home/home.component';
 
 const routes: Routes = [
-  {path:'', redirectTo:'auth/autocadastro', pathMatch:'full'},
+  {path:'', redirectTo:'auth/login', pathMatch:'full'},
   
-  {path: 'auth/autocadastro', component: RegisterComponent},
+  {path: 'auth/cadastro', component: RegisterComponent},
   {path: 'auth/login', component: LoginComponent},
 
   {path: 'cliente/home', component: HomeComponent, canActivate: [authGuard]}

@@ -1,7 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
-import { NgForm, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { UserLoginDto } from '../../dtos/user-login-dto';
+import { UserRole } from '../../enum/UserRole';
+import { Auth } from '../../model/auth.model';
+import { BaseResponse, DataResponse, ErrorResponse } from '../../model/base-response.model';
 import { AuthService } from '../auth.service';
 
 @Component({
@@ -15,7 +19,7 @@ import { AuthService } from '../auth.service';
 export class LoginComponent {
     form: FormGroup;
     
-    constructor(private authService: AuthService, private formBuilder: FormBuilder) {
+    constructor(private authService: AuthService, private formBuilder: FormBuilder, private router: Router) {
         this.form = this.formBuilder.group({
             email:  ['', [Validators.required, Validators.email]],
             password:  ['', [Validators.required, Validators.minLength(4), Validators.maxLength(4)]],
@@ -30,7 +34,30 @@ export class LoginComponent {
     }
 
     onSubmit() {
-      console.log(this.form.value);
+        const formInfo = this.form.value;
+        const loginDto = {
+            email: formInfo.email,
+            password: formInfo.password
+        } as UserLoginDto;
+
+        this.authService.login(loginDto).subscribe((response: BaseResponse<Auth>) => {
+            if(response instanceof DataResponse) {
+                //TODO persistir
+                if(response.data.userRole === UserRole.CLIENT) {
+                    this.router.navigate(['cliente/home']);
+                }
+                if(response.data.userRole === UserRole.EMPLOYEE) {
+                    this.router.navigate(['funcionario/home']);
+                }
+            }
+            if(response instanceof ErrorResponse){
+                console.log('login error');
+            }
+        });
+    }
+
+    navigateToRegister() {
+        this.router.navigate(['auth/cadastro']);
     }
 }
 

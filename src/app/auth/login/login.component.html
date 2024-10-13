@@ -18,6 +18,9 @@
                 <div *ngIf="password?.invalid && (password?.dirty || password?.touched)">
                     <small *ngIf="password?.errors??['required']">Senha é obrigatória.</small>
                 </div>
+
+                <button type="submit" class="btn btn-primary" (click)="onSubmit()" [disabled]="(form.invalid)">Login</button>
+                <button type="button" class="btn btn-secondary" (click)="navigateToRegister()">Criar uma conta</button>
             </form>
         </div>
     </div>

@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { provideNgxMask, NgxMaskDirective } from 'ngx-mask';
 import { AppRoutingModule } from './app-routing.module';
-import { provideHttpClient } from '@angular/common/http';
+import { HttpClientModule, provideHttpClient } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './auth/access-token/token.interceptor';
@@ -13,6 +13,7 @@ import { TokenInterceptor } from './auth/access-token/token.interceptor';
     AppComponent,
   ],
   imports: [
+    HttpClientModule,
     BrowserModule,
     FormsModule,
     NgxMaskDirective,
@@ -20,7 +21,7 @@ import { TokenInterceptor } from './auth/access-token/token.interceptor';
     ReactiveFormsModule
   ],
   providers: [
-    // { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
     provideHttpClient(),
     provideNgxMask(),
   ],

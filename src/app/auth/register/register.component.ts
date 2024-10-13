@@ -6,8 +6,8 @@ import { Router } from '@angular/router';
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 import { AddressDto } from '../../dtos/address-dto';
 import { UserRegisterDto } from '../../dtos/user-register-dto';
-import { BaseResponse, BaseResponseType, ErrorBaseResponse } from '../../model/base-response.model';
-import { User } from '../../model/user.model';
+import { BaseResponse, BaseResponseType, DataResponse, ErrorResponse } from '../../model/base-response.model';
+import { Client } from '../../model/client.model';
 import { ViaCepResponse } from '../../model/via-cep-response.model';
 import { AuthService } from '../auth.service';
 
@@ -120,15 +120,13 @@ export class RegisterComponent {
             userForm.phone,
             addressDto
         );
-        this.authService.register(userDto).subscribe((response: HttpResponse<BaseResponse<User>>) => {
-            if(response.status === 201){
+        this.authService.registerClient(userDto).subscribe((response: BaseResponse<Client>) => {
+            if(response instanceof DataResponse){
+                const { data: client } = response; //TODO PERSISTIR CLIENTE
                 this.router.navigate(['/auth/login']);
             }
-            else {
-                if(response?.body?.type === BaseResponseType.ERROR){
-                    const errorResponse = response.body as ErrorBaseResponse;
-                    console.log(errorResponse.errorMessage);
-                }
+            if(response instanceof ErrorResponse){
+                console.log(response.errorMessage);
             }
         });
     }
