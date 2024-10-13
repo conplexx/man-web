@@ -3,13 +3,13 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserLoginDto } from '../../dtos/user-login-dto';
-import { UserRole } from '../../enum/UserRole';
+import { UserRole } from '../../enum/user-role';
 import { Auth } from '../../model/auth.model';
 import { BaseResponse, DataResponse, ErrorResponse } from '../../model/base-response.model';
 import { AuthService } from '../auth.service';
 
 @Component({
-  selector: 'app-login',
+  selector: 'login',
   standalone: true,
   imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './login.component.html',

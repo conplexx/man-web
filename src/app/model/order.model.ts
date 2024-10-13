@@ -1,28 +1,30 @@
 import { HttpResponse } from "@angular/common/http";
-import { ClientOrderState } from "../enum/ClientOrderState";
+import { ClientOrderState } from "../enum/client-order-state";
 import { Budget } from "./budget.model";
 import { BaseResponse, DataResponse } from "./base-response.model";
+import { EquipmentCategory } from "./equipment-category.model";
 
 export class Order {
     constructor (
-        id: string,
-        date: Date,
-        equipmentCategoryId: string,
-        equipmentDescription: string,
-        state: ClientOrderState,
-        steps: OrderStep[]
+        public id: string,
+        public date: Date,
+        public equipmentCategory: EquipmentCategory,
+        public equipmentDescription: string,
+        public state: ClientOrderState,
+        public steps: OrderStep[]
     ) {}
 }
 
+//TODO criar tipos diferentes OrderStep
 export class OrderStep {
     constructor (
-        id: string,
-        orderId: string,
-        state: ClientOrderState,
-        date: Date,
-        employeeId: string,
-        maintananceId?: string,
-        clientRejectedReason?: string,
-        budget?: Budget
+        public id: string,
+        public orderId: string,
+        public  state: ClientOrderState,
+        public date: Date,
+        public employeeId: string,
+        public maintananceId?: string,
+        public clientRejectedReason?: string,
+        public budget?: Budget
     ) {}
 }

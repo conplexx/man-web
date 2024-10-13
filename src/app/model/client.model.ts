@@ -1,5 +1,5 @@
 import { HttpResponse } from "@angular/common/http";
-import { UserRole } from "../enum/UserRole";
+import { UserRole } from "../enum/user-role";
 import { Address } from "./address.model";
 
 export class Client {

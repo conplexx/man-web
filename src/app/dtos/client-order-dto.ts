@@ -1,7 +1,9 @@
+import { EquipmentCategory } from "../model/equipment-category.model";
+
 export class ClientOrderDto {
     constructor(
-        equipmentDescription: string,
-        equipmentCategoryId: string,
-        failureDescription: string,
-    ) {}
+        public equipmentDescription: string,
+        public failureDescription: string,
+        public equipmentCategoryId: string,
+    ){}
 }
