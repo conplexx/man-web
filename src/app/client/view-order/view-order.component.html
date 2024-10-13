@@ -1,0 +1,19 @@
+<div *ngIf="order">
+    <h2>Order Details</h2>
+    
+    <p><strong>Data:</strong> {{ order.date | date:'short' }}</p>
+    <p><strong>Categoria do equipamento:</strong> {{ order.equipmentCategory }}</p>
+    <p><strong>Descrição do equipamento:</strong> {{ order.equipmentDescription }}</p>
+    <p><strong>Estado:</strong> {{ order.state }}</p>
+    
+    <h3>Steps</h3>
+    <ul>
+      <li *ngFor="let step of order.steps">
+        <!-- <p><strong>Step:</strong> {{ step. }}</p> -->
+      </li>
+    </ul>
+  </div>
+  
+  <div *ngIf="!order">
+    <p>Loading order details...</p>
+  </div>

@@ -4,6 +4,7 @@ import { ClientService } from '../client.service';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { EquipmentCategory } from '../../model/equipment-category.model';
+import { DataResponse } from '../../model/base-response.model';
 
 @Component({
   selector: 'app-new-order',
@@ -18,8 +19,10 @@ export class NewOrderComponent {
     equipmentCategoryId?: string;
 
     constructor(private clientService: ClientService, private formBuilder: FormBuilder) {
-        this.clientService.getEquipmentCategories().subscribe((equipmentCategories) => {
-            this.equipmentCategories = equipmentCategories;
+        this.clientService.getEquipmentCategories().subscribe(res => {
+            if(res instanceof DataResponse){
+                this.equipmentCategories = res.data;
+            }
         });
         this.form = this.formBuilder.group({
             equipmentDescription:  ['', [Validators.required, Validators.maxLength(30)]],
@@ -40,7 +43,7 @@ export class NewOrderComponent {
     }
     
     onSubmit() {
-        if(this.form.invalid) return;
+        if(this.form.invalid || !this.equipmentCategoryId) return;
         const form = this.form.value;
         const orderDto: ClientOrderDto = {
             equipmentDescription: form.equipmentDescription,
@@ -49,6 +52,7 @@ export class NewOrderComponent {
         };
         
         this.clientService.postOrder(orderDto).subscribe((order) => {
+            //TODO post solicitação de manutenção
         });
     }
 }

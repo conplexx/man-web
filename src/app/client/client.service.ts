@@ -12,7 +12,7 @@ import { Order } from '../model/order.model';
 export class ClientService {
   url = 'http://localhost:8080/api/cliente';
   homeUrl = `${this.url}/home`;
-  postOrderUrl = `${this.url}/pedido`;
+  orderUrl = `${this.url}/pedido`;
   equipmentCategoriesUrl = `${this.url}/categorias-de-equipamento`;
 
   httpOptions = {
@@ -26,7 +26,15 @@ export class ClientService {
   }
 
   postOrder(clientOrderDto: ClientOrderDto): Observable<BaseResponse<Order>> {
-    return this.http.post<BaseResponse<Order>>(this.postOrderUrl, JSON.stringify(clientOrderDto), this.httpOptions).pipe(retry(1), catchError(this.handleError));
+    return this.http.post<BaseResponse<Order>>(this.orderUrl, JSON.stringify(clientOrderDto), this.httpOptions).pipe(retry(1), catchError(this.handleError));
+  }
+
+  getAllOrders(): Observable<BaseResponse<Order[]>> {
+    return this.http.get<BaseResponse<Order[]>>(this.orderUrl, this.httpOptions).pipe(retry(1), catchError(this.handleError));
+  }
+
+  getOrder(orderId: string): Observable<BaseResponse<Order>> {
+    return this.http.get<BaseResponse<Order>>(`${this.orderUrl}/${orderId}`, this.httpOptions).pipe(retry(1), catchError(this.handleError));
   }
 
   getEquipmentCategories(): Observable<BaseResponse<EquipmentCategory[]>> {

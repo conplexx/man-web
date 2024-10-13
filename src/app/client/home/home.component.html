@@ -1,1 +1,12 @@
-<p>home works!</p>
+<div *ngFor="let order of orders">
+    <div>
+        <span>{{ order.date }}</span>
+        <span>{{ order.equipmentDescription.name }}</span>
+        <span>{{ order.state }}</span>
+        <ng-container *ngIf="getHomeActionFromOrderState(order.state) as clientAction">
+            <button *ngIf="getActionButtonLabel(clientAction) as label" (click)="performAction(order.id, clientAction)">
+                {{ label }}
+            </button>
+        </ng-container>
+    </div>
+</div>
