@@ -1,7 +1,5 @@
-import { HttpResponse } from "@angular/common/http";
 import { ClientOrderState } from "../enum/client-order-state";
 import { Budget } from "./budget.model";
-import { BaseResponse, DataResponse } from "./base-response.model";
 import { EquipmentCategory } from "./equipment-category.model";
 
 export class Order {
@@ -20,7 +18,7 @@ export class OrderStep {
     constructor (
         public id: string,
         public orderId: string,
-        public  state: ClientOrderState,
+        public state: ClientOrderState,
         public date: Date,
         public employeeId: string,
         public maintananceId?: string,

@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { ClientOrderDto } from '../../dtos/client-order-dto';
+import { ClientOrderDto } from '../../model/dtos/client-order-dto';
 import { ClientService } from '../client.service';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { EquipmentCategory } from '../../model/equipment-category.model';
-import { DataResponse } from '../../model/base-response.model';
+import { EquipmentCategory } from '../../model/data/equipment-category.model';
+import { DataResponse } from '../../model/response/base-response';
 
 @Component({
   selector: 'app-new-order',

@@ -1,8 +1,8 @@
 export class EmployeeBudgetDto {
     constructor(
         public value: number,
-        public orderStepId: string,
-        public employeeId: string,
+        public orderId: string,
+        // public orderStepId: string,
         public description?: string
     ) { }
 } 

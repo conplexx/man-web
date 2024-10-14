@@ -1,7 +1,7 @@
 export enum BaseResponseType{
-    EMPTY,
-    ERROR,
-    DATA
+    EMPTY = "EMPTY",
+    ERROR = "ERROR",
+    DATA = "DATA"
 }
 
 //sem dados e sem erro

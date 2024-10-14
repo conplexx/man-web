@@ -1,0 +1,22 @@
+<div class="container mt-4">
+    <h2>Solicitações em aberto</h2>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Data</th>
+          <th>Nome do cliente</th>
+          <th>Descrição do equipamento</th>
+          <th>Descrição da falha</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let order of orders">
+          <td>{{ order.date | date: 'short' }}</td>
+          <td>{{ order.client.name }}</td>
+          <td>{{ order.equipmentDescription }}</td>
+          <td>{{ order.failureDescription }}</td>
+          <td>{{ order.equipmentCategory }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>

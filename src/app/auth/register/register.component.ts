@@ -4,11 +4,11 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
-import { AddressDto } from '../../dtos/address-dto';
-import { UserRegisterDto } from '../../dtos/user-register-dto';
-import { BaseResponse, BaseResponseType, DataResponse, ErrorResponse } from '../../model/base-response.model';
-import { Client } from '../../model/client.model';
-import { ViaCepResponse } from '../../model/via-cep-response.model';
+import { AddressDto } from '../../model/dtos/address-dto';
+import { UserRegisterDto } from '../../model/dtos/user-register-dto';
+import { BaseResponse, BaseResponseType, DataResponse, ErrorResponse } from '../../model/response/base-response';
+import { Client } from '../../model/data/client.model';
+import { ViaCepResponse } from '../../model/response/via-cep-response';
 import { AuthService } from '../auth.service';
 
 @Component({

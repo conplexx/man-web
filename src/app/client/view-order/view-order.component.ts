@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { ClientService } from '../client.service';
-import { Order } from '../../model/order.model';
+import { Order } from '../../model/data/order.model';
 import { ActivatedRoute } from '@angular/router';
-import { DataResponse } from '../../model/base-response.model';
+import { DataResponse } from '../../model/response/base-response';
 import { CommonModule } from '@angular/common';
 
 @Component({

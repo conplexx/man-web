@@ -4,7 +4,7 @@ import { ActivatedRouteSnapshot, RouterStateSnapshot, Router, CanActivateFn, Url
 import { AuthService } from "./auth.service";
 import { catchError, map, Observable, of } from "rxjs";
 import { JwtHelperService } from "@auth0/angular-jwt";
-import { AccessToken } from "../model/access-token.model";
+import { AccessToken } from "../model/data/access-token.model";
 
 export const authGuard: CanActivateFn = (
     next: ActivatedRouteSnapshot,
@@ -25,8 +25,8 @@ export const authGuard: CanActivateFn = (
         if(refreshToken && !jwtHelper.isTokenExpired(refreshToken)) {
             const accessToken = { authToken, refreshToken } as AccessToken;
             return authService.postRefreshToken(accessToken).pipe(
-                map((token) => {
-                    authService.saveAccessToken(token);
+                map((newToken) => {
+                    authService.saveAccessToken(newToken);
                     return true;
                 }),
                 catchError(() => {
@@ -36,6 +36,5 @@ export const authGuard: CanActivateFn = (
             );
         }
     }
-    authService.logout();
-    return router.createUrlTree(['/auth/login']);
+    return true;
 };

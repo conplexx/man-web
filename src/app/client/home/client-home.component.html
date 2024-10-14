@@ -1,9 +1,10 @@
 <div *ngFor="let order of orders">
     <div>
         <span>{{ order.date }}</span>
-        <span>{{ order.equipmentDescription.name }}</span>
+        <span>{{ order.equipmentCategory.name }}</span>
+        <span>{{ order.equipmentDescription }}</span>
         <span>{{ order.state }}</span>
-        <ng-container *ngIf="getHomeActionFromOrderState(order.state) as clientAction">
+        <ng-container *ngIf="getClientHomeAction(order.state) as clientAction">
             <button *ngIf="getActionButtonLabel(clientAction) as label" (click)="performAction(order.id, clientAction)">
                 {{ label }}
             </button>

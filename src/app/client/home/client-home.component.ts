@@ -1,17 +1,17 @@
 import { Component } from '@angular/core';
-import { ClientOrderState } from '../../enum/client-order-state';
-import { DataResponse } from '../../model/base-response.model';
-import { Order } from '../../model/order.model';
+import { ClientOrderState } from '../../model/enum/client-order-state';
+import { DataResponse } from '../../model/response/base-response';
+import { Order } from '../../model/data/order.model';
 import { ClientService } from '../client.service';
-import { ClientHomeAction } from '../../enum/client-home-action';
+import { ClientHomeAction } from '../../model/enum/client-home-action';
 import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'client-home',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './home.component.html',
-  styleUrl: './home.component.css'
+  templateUrl: './client-home.component.html',
+  styleUrl: './client-home.component.css'
 })
 
 export class HomeComponent {

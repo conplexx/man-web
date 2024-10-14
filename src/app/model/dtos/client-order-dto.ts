@@ -1,4 +1,4 @@
-import { EquipmentCategory } from "../model/equipment-category.model";
+import { EquipmentCategory } from "../data/equipment-category.model";
 
 export class ClientOrderDto {
     constructor(

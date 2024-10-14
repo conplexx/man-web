@@ -2,13 +2,15 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { catchError, Observable, retry, throwError } from 'rxjs';
-import { UserLoginDto } from '../dtos/user-login-dto';
-import { UserRegisterDto } from '../dtos/user-register-dto';
-import { AccessToken } from '../model/access-token.model';
-import { Auth } from '../model/auth.model';
-import { ViaCepResponse } from '../model/via-cep-response.model';
-import { Client, ClientResponse } from '../model/client.model';
-import { BaseResponse } from '../model/base-response.model';
+import { UserLoginDto } from '../model/dtos/user-login-dto';
+import { UserRegisterDto } from '../model/dtos/user-register-dto';
+import { AccessToken } from '../model/data/access-token.model';
+import { Auth } from '../model/data/auth.model';
+import { ViaCepResponse } from '../model/response/via-cep-response';
+import { Client } from '../model/data/client.model';
+import { BaseResponse } from '../model/response/base-response';
+import { UserRole } from '../model/enum/user-role';
+import { Employee } from '../model/data/employee.model';
 
 @Injectable({
   providedIn: 'root'
@@ -20,8 +22,11 @@ export class AuthService {
   refreshTokenUrl = `${this.url}/refresh-token`;
 
   private jwtHelper = new JwtHelperService();
-  private authTokenKey = 'auth-token';
-  private refreshTokenKey = 'refresh-token';
+  
+  public authTokenKey = 'auth-token';
+  public refreshTokenKey = 'refresh-token';
+  public userRoleKey = 'user-role';
+  public userKey = 'user';
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }),
@@ -30,7 +35,7 @@ export class AuthService {
   constructor(private http: HttpClient) {}
 
   registerClient(registerDto: UserRegisterDto): Observable<BaseResponse<Client>> {
-    return this.http.post<BaseResponse<Client>>(this.registerUrl, JSON.stringify(registerDto), this.httpOptions).pipe(retry(1), catchError(this.handleError));
+    return this.http.post<BaseResponse<Client>>(this.registerUrl, JSON.stringify(registerDto), this.httpOptions).pipe(catchError(this.handleError));
   }
 
   login(loginDto: UserLoginDto): Observable<BaseResponse<Auth>> {
@@ -62,6 +67,23 @@ export class AuthService {
 
   getRefreshToken(): string | null {
     return localStorage.getItem(this.refreshTokenKey);
+  }
+
+  getUserRole(): UserRole | null {
+    return localStorage.getItem(this.userRoleKey) as UserRole;
+  }
+
+  getUser(): Client | Employee | null {
+    const user = localStorage.getItem(this.userKey);
+    if(user){
+        if(this.getUserRole() === UserRole.CLIENT){
+            return JSON.parse(user) as Client;
+        }
+        if(this.getUserRole() === UserRole.EMPLOYEE){
+            return JSON.parse(user) as Employee;
+        }
+    }
+    return null;
   }
 
   removeAccessToken(): void {

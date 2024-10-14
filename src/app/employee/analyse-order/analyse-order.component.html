@@ -1,0 +1,18 @@
+<div class="container mt-4">
+    <h2>Order Details</h2>
+    <div class="card" *ngIf="order">
+      <div class="card-header">
+        Order Information
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">Client: {{ order.client.name }}</h5>
+        <h5 class="card-title">Client: {{ order.client.email }}</h5>
+        <h5 class="card-title">Client: {{ order.client.phone }}</h5>
+        <h5 class="card-title">Client: {{ order.client.address.city }}</h5>
+        <h5 class="card-title">Client: {{ order.client.address.neighborhood }}</h5>
+        <p class="card-text"><strong>Date:</strong> {{ order.date | date: 'short' }}</p>
+        <p class="card-text"><strong>Equipment Description:</strong> {{ order.equipmentDescription }}</p>
+        <p class="card-text"><strong>Failure Description:</strong> {{ order.failureDescription }}</p>
+      </div>
+    </div>
+  </div>

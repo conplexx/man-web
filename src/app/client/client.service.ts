@@ -1,10 +1,10 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, retry, throwError } from 'rxjs';
-import { ClientOrderDto } from '../dtos/client-order-dto';
-import { EquipmentCategory } from '../model/equipment-category.model';
-import { BaseResponse } from '../model/base-response.model';
-import { Order } from '../model/order.model';
+import { ClientOrderDto } from '../model/dtos/client-order-dto';
+import { EquipmentCategory } from '../model/data/equipment-category.model';
+import { BaseResponse } from '../model/response/base-response';
+import { Order } from '../model/data/order.model';
 
 @Injectable({
   providedIn: 'root'

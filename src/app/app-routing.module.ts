@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { RegisterComponent } from './auth/register';
-import { LoginComponent } from './auth/login';
+import { RegisterComponent } from './auth/register/register.component';
+import { LoginComponent } from './auth/login/login.component';
 import { authGuard } from './auth/auth.guard';
-import { HomeComponent } from './client/home/home.component';
+import { HomeComponent } from './client/home/client-home.component';
 
 const routes: Routes = [
   {path:'', redirectTo:'auth/login', pathMatch:'full'},
@@ -11,7 +11,9 @@ const routes: Routes = [
   {path: 'auth/cadastro', component: RegisterComponent},
   {path: 'auth/login', component: LoginComponent},
 
-  {path: 'cliente/home', component: HomeComponent, canActivate: [authGuard]}
+  {path: 'cliente/home', component: HomeComponent, canActivate: [authGuard]},
+
+  {path: 'funcionario/home', component: HomeComponent, canActivate: [authGuard]}
 ];
 
 @NgModule({

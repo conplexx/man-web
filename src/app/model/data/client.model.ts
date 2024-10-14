@@ -13,6 +13,3 @@ export class Client {
       public id?: string,
     ) {}
 }
-
-export type ClientResponse = HttpResponse<Client>;
-export type ClientsResponse = HttpResponse<Client[]>;
