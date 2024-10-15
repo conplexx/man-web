@@ -13,7 +13,7 @@ import { CommonModule } from '@angular/common';
   styleUrl: './employee-home.component.css'
 })
 
-export class HomeComponent {
+export class EmployeeHomeComponent {
     orders: EmployeeOrder[] = [];
 
     constructor(private employeeService: EmployeeService) {

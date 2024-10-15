@@ -54,10 +54,11 @@ export class LoginComponent {
                 localStorage.setItem(this.authService.userKey, JSON.stringify(user));
 
                 if(dataRes.data.userRole === UserRole.CLIENT) {
-                    this.router.navigate(['cliente', 'home']);
+                    // this.router.navigate(['cliente/home']);
+                    this.router.navigate(['cliente/novo-pedido']);
                 }
                 if(dataRes.data.userRole === UserRole.EMPLOYEE) {
-                    this.router.navigate(['funcionario', 'home']);
+                    this.router.navigate(['funcionario/home']);
                 }
             }
         });

@@ -12,7 +12,7 @@ import { Order } from '../model/data/order.model';
 export class ClientService {
   url = 'http://localhost:8080/api/cliente';
   homeUrl = `${this.url}/home`;
-  orderUrl = `${this.url}/pedido`;
+  orderUrl = `${this.url}/manutencao`;
   equipmentCategoriesUrl = `${this.url}/categorias-de-equipamento`;
 
   httpOptions = {

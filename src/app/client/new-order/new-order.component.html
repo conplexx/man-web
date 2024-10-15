@@ -4,7 +4,7 @@
             <h2>Solicitação de Manutenção</h2>
             <form [formGroup]="form">
                 <div class="mb-3">
-                    <label for="equipmentCategory" class="form-label">Descrição do equipamento</label>
+                    <label for="equipmentCategory" class="form-label">Categoria do equipamento</label>
                 </div>
                 <div class="mb-3">
                     <select (change)="onEquipmentCategoryChange($event)">
@@ -22,11 +22,11 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="failureDescription" class="form-label">Senha</label>
+                    <label for="failureDescription" class="form-label">Descrição do problema</label>
                     <input id="failureDescription" formControlName="failureDescription" type="text" class="form-control" />
                 </div>
                 <div *ngIf="failureDescription?.invalid && (failureDescription?.dirty || failureDescription?.touched)">
-                    <small *ngIf="failureDescription?.errors??['required']">A descrição da falha é obrigatória.</small>
+                    <small *ngIf="failureDescription?.errors??['required']">A descrição do problema é obrigatória.</small>
                 </div>
 
                 <button type="submit" class="btn btn-primary" (click)="onSubmit()" [disabled]="(form.invalid || equipmentCategoryId === undefined)">Cadastrar</button>

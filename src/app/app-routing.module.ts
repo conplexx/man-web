@@ -3,7 +3,12 @@ import { RouterModule, Routes } from '@angular/router';
 import { RegisterComponent } from './auth/register/register.component';
 import { LoginComponent } from './auth/login/login.component';
 import { authGuard } from './auth/auth.guard';
-import { HomeComponent } from './client/home/client-home.component';
+import { ClientHomeComponent } from './client/home/client-home.component';
+import { NewOrderComponent } from './client/new-order/new-order.component';
+import { EmployeeHomeComponent } from './employee/home/employee-home.component';
+import { AnalyseOrderComponent } from './employee/analyse-order/analyse-order.component';
+import { ViewOrderComponent } from './client/view-order/view-order.component';
+import { ClientParentLayoutComponent } from './client/parent-layout/parent-layout.component';
 
 const routes: Routes = [
   {path:'', redirectTo:'auth/login', pathMatch:'full'},
@@ -11,9 +16,19 @@ const routes: Routes = [
   {path: 'auth/cadastro', component: RegisterComponent},
   {path: 'auth/login', component: LoginComponent},
 
-  {path: 'cliente/home', component: HomeComponent, canActivate: [authGuard]},
+  {
+    path: 'cliente',
+    component: ClientParentLayoutComponent,
+    children: [
+      {path: 'home', component: ClientHomeComponent, canActivate: [authGuard]},
+      {path: 'novo-pedido', component: NewOrderComponent, canActivate: [authGuard]},
+      {path: 'visualizar-pedido', component: ViewOrderComponent, canActivate: [authGuard]},
+      
+    ]
+  },
 
-  {path: 'funcionario/home', component: HomeComponent, canActivate: [authGuard]}
+  {path: 'funcionario/home', component: EmployeeHomeComponent, canActivate: [authGuard]},
+  {path: 'funcionario/analisar-pedido', component: AnalyseOrderComponent, canActivate: [authGuard]}
 ];
 
 @NgModule({

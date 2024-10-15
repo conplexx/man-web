@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ClientOrderState } from '../../model/enum/client-order-state';
-import { DataResponse } from '../../model/response/base-response';
+import { BaseResponseType, DataResponse } from '../../model/response/base-response';
 import { Order } from '../../model/data/order.model';
 import { ClientService } from '../client.service';
 import { ClientHomeAction } from '../../model/enum/client-home-action';
@@ -14,13 +14,14 @@ import { CommonModule } from '@angular/common';
   styleUrl: './client-home.component.css'
 })
 
-export class HomeComponent {
+export class ClientHomeComponent {
   orders: Order[] = [];
 
   constructor(private clientService: ClientService) {
     this.clientService.getHome().subscribe(res => {
-        if(res instanceof DataResponse) {
-            // res.data;
+        if(res.type === BaseResponseType.DATA) {
+          const dataRes = res as DataResponse<Order[]>;
+          this.orders = dataRes.data;
         }
     });
   }
