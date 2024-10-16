@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { EmployeeService } from '../employee.service';
-import { BaseResponse, DataResponse } from '../../model/response/base-response';
+import { BaseResponse, BaseResponseType, DataResponse } from '../../model/response/base-response';
 import { EmployeeOrder } from '../../model/data/employee-order.model';
 import { EmployeeBudgetDto } from '../../model/dtos/employee-budget-dto';
 import { CommonModule } from '@angular/common';
@@ -18,8 +18,9 @@ export class EmployeeHomeComponent {
 
     constructor(private employeeService: EmployeeService) {
         this.employeeService.getHome().subscribe((res: BaseResponse<EmployeeOrder[]>) => {
-            if(res instanceof DataResponse) {
-                this.orders = res.data;
+            if(res.type === BaseResponseType.DATA){
+                const dataRes = res as DataResponse<EmployeeOrder[]>;
+                this.orders = dataRes.data;
             }
         });
     }

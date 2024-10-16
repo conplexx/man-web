@@ -11,3 +11,27 @@
         </ng-container>
     </div>
 </div>
+
+<div class="container mt-4">
+    <h2>Solicitações em aberto</h2>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Data</th>
+          <th>Categoria do equipamento</th>
+          <th>Descrição do equipamento</th>
+          <th>Descrição da falha</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let order of orders">
+          <td>{{ order.date | date: 'short' }}</td>
+          <td>{{ order.equipmentCategory.name }}</td>
+          <td>{{ order.equipmentDescription }}</td>
+          <td>{{ order.failureDescription }}</td>
+          <td>{{ order.state }}</td>
+          <!-- botao de acao aqui -->
+        </tr>
+      </tbody>
+    </table>
+  </div>

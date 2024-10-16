@@ -18,9 +18,15 @@
                 </ul>
                 <hr>
                 <div class="dropdown pb-4" *ngIf="client">
-                    <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a  (click)="logout()" 
+                        class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" 
+                        id="dropdownUser1" 
+                        data-bs-toggle="dropdown" 
+                        aria-expanded="false"
+                    >
                         <span class="d-none d-sm-inline mx-1">{{client.name}}</span>
                     </a>
+                    <button (click)="logout()">Sair</button>
                 </div>
             </div>
         </div>

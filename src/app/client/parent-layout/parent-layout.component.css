@@ -1,0 +1,10 @@
+.dropdown {
+    width: 80%;
+    align-self: center;
+    display: flex;
+    flex-direction: row;
+    padding: 0;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }

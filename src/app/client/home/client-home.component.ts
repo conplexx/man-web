@@ -20,6 +20,7 @@ export class ClientHomeComponent {
   constructor(private clientService: ClientService) {
     this.clientService.getHome().subscribe(res => {
         if(res.type === BaseResponseType.DATA) {
+          console.log('homeOrders', this.orders )
           const dataRes = res as DataResponse<Order[]>;
           this.orders = dataRes.data;
         }

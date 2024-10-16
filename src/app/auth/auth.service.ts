@@ -8,7 +8,7 @@ import { AccessToken } from '../model/data/access-token.model';
 import { Auth } from '../model/data/auth.model';
 import { ViaCepResponse } from '../model/response/via-cep-response';
 import { Client } from '../model/data/client.model';
-import { BaseResponse } from '../model/response/base-response';
+import { BaseResponse, EmptyResponse } from '../model/response/base-response';
 import { UserRole } from '../model/enum/user-role';
 import { Employee } from '../model/data/employee.model';
 import { authTokenKey, refreshTokenKey, userKey, userRoleKey } from '../model/data/local-storage-keys';
@@ -20,12 +20,13 @@ export class AuthService {
   url = 'http://localhost:8080/api/auth';
   registerUrl = `${this.url}/client-register`;
   loginUrl = `${this.url}/login`;
+  logoutUrl = `${this.url}/logout`;
   refreshTokenUrl = `${this.url}/refresh-token`;
 
   private jwtHelper = new JwtHelperService();
 
   httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }),
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
   }
 
   constructor(private http: HttpClient) {}
@@ -52,9 +53,11 @@ export class AuthService {
     localStorage.setItem(refreshTokenKey, token.refreshToken);
   }
 
-  logout(): void {
+  logout(): Observable<EmptyResponse> {
     this.removeAccessToken();
-    //TODO rota de logout na api
+    localStorage.removeItem(userKey);
+    localStorage.removeItem(userRoleKey);
+    return this.http.post<EmptyResponse>(this.logoutUrl, this.httpOptions).pipe(retry(1), catchError(this.handleError));
   }
 
   getAuthToken(): string | null {

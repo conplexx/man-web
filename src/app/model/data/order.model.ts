@@ -8,6 +8,7 @@ export class Order {
         public date: Date,
         public equipmentCategory: EquipmentCategory,
         public equipmentDescription: string,
+        public failureDescription: string,
         public state: ClientOrderState,
         public steps: OrderStep[]
     ) {}
