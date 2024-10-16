@@ -26,10 +26,10 @@ export class RegisterComponent {
     
     constructor(private authService: AuthService, private formBuilder: FormBuilder, private router: Router) {
         this.userForm = this.formBuilder.group({
-            cpf:    ['', Validators.required],
+            cpf:    ['', Validators.required, Validators.minLength(11), Validators.maxLength(11)],
             name:   ['', Validators.required],
             email:  ['', [Validators.required, Validators.email]],
-            phone:  ['', [Validators.required, Validators.minLength(11)]],
+            phone:  ['', [Validators.required, Validators.minLength(11), Validators.maxLength(11)]],
         });
 
         this.addressForm = this.formBuilder.group({

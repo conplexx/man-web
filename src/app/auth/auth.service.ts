@@ -11,6 +11,7 @@ import { Client } from '../model/data/client.model';
 import { BaseResponse } from '../model/response/base-response';
 import { UserRole } from '../model/enum/user-role';
 import { Employee } from '../model/data/employee.model';
+import { authTokenKey, refreshTokenKey, userKey, userRoleKey } from '../model/data/local-storage-keys';
 
 @Injectable({
   providedIn: 'root'
@@ -22,11 +23,6 @@ export class AuthService {
   refreshTokenUrl = `${this.url}/refresh-token`;
 
   private jwtHelper = new JwtHelperService();
-  
-  public authTokenKey = 'auth-token';
-  public refreshTokenKey = 'refresh-token';
-  public userRoleKey = 'user-role';
-  public userKey = 'user';
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }),
@@ -52,8 +48,8 @@ export class AuthService {
   }
 
   saveAccessToken(token: AccessToken): void {
-    localStorage.setItem(this.authTokenKey, token.authToken);
-    localStorage.setItem(this.refreshTokenKey, token.refreshToken);
+    localStorage.setItem(authTokenKey, token.authToken);
+    localStorage.setItem(refreshTokenKey, token.refreshToken);
   }
 
   logout(): void {
@@ -62,19 +58,19 @@ export class AuthService {
   }
 
   getAuthToken(): string | null {
-    return localStorage.getItem(this.authTokenKey);
+    return localStorage.getItem(authTokenKey);
   }
 
   getRefreshToken(): string | null {
-    return localStorage.getItem(this.refreshTokenKey);
+    return localStorage.getItem(refreshTokenKey);
   }
 
   getUserRole(): UserRole | null {
-    return localStorage.getItem(this.userRoleKey) as UserRole;
+    return localStorage.getItem(userRoleKey) as UserRole;
   }
 
   getUser(): Client | Employee | null {
-    const user = localStorage.getItem(this.userKey);
+    const user = localStorage.getItem(userKey);
     if(user){
         if(this.getUserRole() === UserRole.CLIENT){
             return JSON.parse(user) as Client;
@@ -87,8 +83,8 @@ export class AuthService {
   }
 
   removeAccessToken(): void {
-    localStorage.removeItem(this.authTokenKey);
-    localStorage.removeItem(this.refreshTokenKey);
+    localStorage.removeItem(authTokenKey);
+    localStorage.removeItem(refreshTokenKey);
   }
 
   isAuthTokenExpired(): boolean {

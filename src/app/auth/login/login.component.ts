@@ -7,6 +7,7 @@ import { UserRole } from '../../model/enum/user-role';
 import { Auth } from '../../model/data/auth.model';
 import { BaseResponse, BaseResponseType, DataResponse, ErrorResponse } from '../../model/response/base-response';
 import { AuthService } from '../auth.service';
+import { authTokenKey, refreshTokenKey, userKey, userRoleKey } from '../../model/data/local-storage-keys';
 
 @Component({
   selector: 'login',
@@ -47,15 +48,14 @@ export class LoginComponent {
         this.authService.login(loginDto).subscribe((res: BaseResponse<Auth>) => {
             if(res && res.type === BaseResponseType.DATA) {
                 const dataRes = res as DataResponse<Auth>;
-                localStorage.setItem(this.authService.authTokenKey, dataRes.data.accessToken.authToken);
-                localStorage.setItem(this.authService.refreshTokenKey, dataRes.data.accessToken.refreshToken);
-                localStorage.setItem(this.authService.userRoleKey, dataRes.data.userRole);
+                localStorage.setItem(authTokenKey, dataRes.data.accessToken.authToken);
+                localStorage.setItem(refreshTokenKey, dataRes.data.accessToken.refreshToken);
+                localStorage.setItem(userRoleKey, dataRes.data.userRole);
                 const user = dataRes.data.userRole === UserRole.CLIENT ? dataRes.data.client : dataRes.data.employee;
-                localStorage.setItem(this.authService.userKey, JSON.stringify(user));
+                localStorage.setItem(userKey, JSON.stringify(user));
 
                 if(dataRes.data.userRole === UserRole.CLIENT) {
-                    // this.router.navigate(['cliente/home']);
-                    this.router.navigate(['cliente/novo-pedido']);
+                    this.router.navigate(['cliente/home']);
                 }
                 if(dataRes.data.userRole === UserRole.EMPLOYEE) {
                     this.router.navigate(['funcionario/home']);

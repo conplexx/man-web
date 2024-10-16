@@ -9,13 +9,13 @@ import { EmployeeHomeComponent } from './employee/home/employee-home.component';
 import { AnalyseOrderComponent } from './employee/analyse-order/analyse-order.component';
 import { ViewOrderComponent } from './client/view-order/view-order.component';
 import { ClientParentLayoutComponent } from './client/parent-layout/parent-layout.component';
+import { EmployeeParentLayoutComponent } from './employee/parent-layout/parent-layout.component';
 
 const routes: Routes = [
   {path:'', redirectTo:'auth/login', pathMatch:'full'},
   
   {path: 'auth/cadastro', component: RegisterComponent},
   {path: 'auth/login', component: LoginComponent},
-
   {
     path: 'cliente',
     component: ClientParentLayoutComponent,
@@ -26,9 +26,14 @@ const routes: Routes = [
       
     ]
   },
-
-  {path: 'funcionario/home', component: EmployeeHomeComponent, canActivate: [authGuard]},
-  {path: 'funcionario/analisar-pedido', component: AnalyseOrderComponent, canActivate: [authGuard]}
+  {
+    path: 'funcionario',
+    component: EmployeeParentLayoutComponent,
+    children: [
+        {path: 'home', component: EmployeeHomeComponent, canActivate: [authGuard]},
+        {path: 'analisar-pedido', component: AnalyseOrderComponent, canActivate: [authGuard]}
+    ]
+  },
 ];
 
 @NgModule({

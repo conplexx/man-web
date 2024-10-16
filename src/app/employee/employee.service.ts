@@ -67,12 +67,20 @@ export class EmployeeService {
     return this.http.delete<BaseResponse<EquipmentCategory[]>>(`${this.equipmentCategoriesUrl}/${categoryId}`, this.httpOptions).pipe(retry(1), catchError(this.handleError));
   }
 
-  getEmployees(): Observable<BaseResponse<Employee[]>> {
+  getAllEmployees(): Observable<BaseResponse<Employee[]>> {
     return this.http.get<BaseResponse<Employee[]>>(this.employeesUrl, this.httpOptions).pipe(retry(1), catchError(this.handleError));
   }
 
   postEmployee(employeeDto: NewEmployeeDto): Observable<BaseResponse<Employee>> {
     return this.http.post<BaseResponse<Employee>>(this.employeesUrl, JSON.stringify(employeeDto), this.httpOptions).pipe(retry(1), catchError(this.handleError));
+  }
+
+  patchEmployee(employee: Employee): Observable<BaseResponse<Employee>> {
+    return this.http.patch<BaseResponse<Employee>>(`${this.employeesUrl}/${employee.id}`, JSON.stringify(employee), this.httpOptions).pipe(retry(1), catchError(this.handleError));
+  }
+
+  deleteEmployee(employeeId: string): Observable<BaseResponse<Employee[]>> {
+    return this.http.delete<BaseResponse<Employee[]>>(`${this.employeesUrl}/${employeeId}`, this.httpOptions).pipe(retry(1), catchError(this.handleError));
   }
 
   handleError(error: HttpErrorResponse) {
