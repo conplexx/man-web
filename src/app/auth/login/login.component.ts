@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UserLoginDto } from '../../model/dtos/user-login-dto';
 import { UserRole } from '../../model/enum/user-role';
 import { Auth } from '../../model/data/auth.model';
@@ -42,11 +42,18 @@ export class LoginComponent {
     constructor(
         private authService: AuthService,
         private formBuilder: FormBuilder,
-        private router: Router
+        private router: Router,
+        private route: ActivatedRoute
     ) {
         this.form = this.formBuilder.group({
             email:  ['', [Validators.required, Validators.email]],
             password:  ['', [Validators.required, Validators.minLength(4), Validators.maxLength(4)]],
+        });
+        this.route.paramMap.subscribe(params => {
+            const email = params.get('email');
+            if (email) {
+                this.form.patchValue({ email });
+            }
         });
         this.gifSrc = this.gifs[Math.floor(Math.random() * this.gifs.length)];
     }

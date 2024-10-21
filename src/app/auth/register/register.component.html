@@ -1,4 +1,91 @@
 <div class="container-fluid bg-light vh-100 d-flex align-items-sm-start justify-content-center" style="padding-top: 10vh;">
+    
+    <div class="container" *ngIf="!isUserForm">
+        <div class="row justify-content-center">
+            <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-5 col-xxl-4">
+                <div class="card border border-light-subtle rounded-3 shadow-sm">
+                    <div class="card-body p-3 p-md-4 p-xl-5">
+                        <h2 class="fs-20 fw-normal text-center text-secondary mb-4">cadastro de clientes</h2>
+                        <p class="fw-normal text-center text-secondary mb-4">informe seu endereço</p>
+                        <form [formGroup]="addressForm">
+                            <div class="row gy-2 overflow-hidden">
+                                <div class="col-12">
+                                    <div class="form-floating mb-3">
+                                        <input id="zipCode" formControlName="zipCode" type="text" class="form-control"
+                                        mask="00000-000" (change)="onCepChange()" required
+                                        />
+                                        <label for="zipCode" class="form-label">CEP</label>
+                                        <div *ngIf="addressZipCode?.invalid && (addressZipCode?.dirty || addressZipCode?.touched)">
+                                            <small *ngIf="addressZipCode?.errors??['required']">CEP é obrigatório.</small>
+                                        </div>
+                                    </div>
+                                </div>
+                    
+                                <div class="col-12">
+                                    <div class="form-floating mb-3">
+                                        <input id="state" formControlName="state" type="text" maxlength="2" class="form-control" required />
+                                        <label for="state" class="form-label">estado</label>
+                                        <div *ngIf="addressState?.invalid && (addressState?.dirty || addressState?.touched)">
+                                            <small *ngIf="addressState?.errors??['required']">estado é obrigatório.</small>
+                                        </div>
+                                    </div>
+                                </div>
+                    
+                                <div class="col-12">
+                                    <div class="form-floating mb-3">
+                                        <input id="city" formControlName="city" type="text" class="form-control" required />
+                                        <label for="city" class="form-label">cidade</label>
+                                        <div *ngIf="addressCity?.invalid && (addressCity?.dirty || addressCity?.touched)">
+                                            <small *ngIf="addressCity?.errors??['required']">cidade é obrigatório.</small>
+                                        </div>
+                                    </div>
+                                </div>
+                    
+                                <div class="col-12">
+                                    <div class="form-floating mb-3">
+                                        <input id="neighborhood" formControlName="neighborhood" type="text" class="form-control" required />
+                                        <label for="neighborhood" class="form-label">bairro</label>
+                                        <div *ngIf="addressNeighborhood?.invalid && (addressNeighborhood?.dirty || addressNeighborhood?.touched)">
+                                            <small *ngIf="addressNeighborhood?.errors??['required']">bairro é obrigatório.</small>
+                                        </div>
+                                    </div>
+                                </div>
+        
+                                <div class="col-12">
+                                    <div class="form-floating mb-3">
+                                        <input id="street" formControlName="street" type="text" class="form-control" required />
+                                        <label for="street" class="form-label">rua</label>
+                                        <div *ngIf="addressStreet?.invalid && (addressStreet?.dirty || addressStreet?.touched)">
+                                            <small *ngIf="addressStreet?.errors??['required']">rua é obrigatório.</small>
+                                        </div>
+                                    </div>
+                                </div>
+        
+                                <div class="col-12">
+                                    <div class="form-floating mb-3">
+                                        <input id="number" formControlName="number" type="text" class="form-control" required/>
+                                        <label for="number" class="form-label">número</label>
+                                        <div *ngIf="addressNumber?.invalid && (addressNumber?.dirty || addressNumber?.touched)">
+                                            <small *ngIf="addressNumber?.errors??['required']">número é obrigatório.</small>
+                                        </div>
+                                    </div>
+                                </div>
+        
+                                <div class="col-12">
+                                    <div class="form-floating mb-3">
+                                        <input id="complement" formControlName="complement" type="text" class="form-control" /> 
+                                        <label for="complement" class="form-label">complemento</label>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary btn-lg w-100" (click)="onSubmit()" [disabled]="(userForm.invalid || addressForm.invalid)">cadastrar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="container" *ngIf="isUserForm">
         <div class="row justify-content-center">
         <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-5 col-xxl-4">
@@ -49,96 +136,11 @@
                             </div>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-primary btn-lg w-100" (click)="toggleUserForm()" [disabled]="userForm.invalid">continuar</button>
                 </form>
+                <button class="btn btn-primary btn-lg w-100" (click)="toggleUserForm()"  [disabled]="userForm.invalid">continuar</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="container" *ngIf="!isUserForm">
-            <div class="row justify-content-center">
-                <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-5 col-xxl-4">
-                    <div class="card border border-light-subtle rounded-3 shadow-sm">
-                        <div class="card-body p-3 p-md-4 p-xl-5">
-                            <h2 class="fs-20 fw-normal text-center text-secondary mb-4">cadastro de clientes</h2>
-                            <p class="fw-normal text-center text-secondary mb-4">informe seu endereço</p>
-                            <form [formGroup]="addressForm">
-                                <div class="row gy-2 overflow-hidden">
-                                    <div class="col-12">
-                                        <div class="form-floating mb-3">
-                                            <input id="zipCode" formControlName="zipCode" type="text" class="form-control"
-                                            mask="00000-000" (change)="onCepChange()" required
-                                            />
-                                            <label for="zipCode" class="form-label">CEP</label>
-                                            <div *ngIf="addressZipCode?.invalid && (addressZipCode?.dirty || addressZipCode?.touched)">
-                                                <small *ngIf="addressZipCode?.errors??['required']">CEP é obrigatório.</small>
-                                            </div>
-                                        </div>
-                                    </div>
-                        
-                                    <div class="col-12">
-                                        <div class="form-floating mb-3">
-                                            <input id="state" formControlName="state" type="text" maxlength="2" class="form-control" required />
-                                            <label for="state" class="form-label">estado</label>
-                                            <div *ngIf="addressState?.invalid && (addressState?.dirty || addressState?.touched)">
-                                                <small *ngIf="addressState?.errors??['required']">estado é obrigatório.</small>
-                                            </div>
-                                        </div>
-                                    </div>
-                        
-                                    <div class="col-12">
-                                        <div class="form-floating mb-3">
-                                            <input id="city" formControlName="city" type="text" class="form-control" required />
-                                            <label for="city" class="form-label">cidade</label>
-                                            <div *ngIf="addressCity?.invalid && (addressCity?.dirty || addressCity?.touched)">
-                                                <small *ngIf="addressCity?.errors??['required']">cidade é obrigatório.</small>
-                                            </div>
-                                        </div>
-                                    </div>
-                        
-                                    <div class="col-12">
-                                        <div class="form-floating mb-3">
-                                            <input id="neighborhood" formControlName="neighborhood" type="text" class="form-control" required />
-                                            <label for="neighborhood" class="form-label">bairro</label>
-                                            <div *ngIf="addressNeighborhood?.invalid && (addressNeighborhood?.dirty || addressNeighborhood?.touched)">
-                                                <small *ngIf="addressNeighborhood?.errors??['required']">bairro é obrigatório.</small>
-                                            </div>
-                                        </div>
-                                    </div>
-            
-                                    <div class="col-12">
-                                        <div class="form-floating mb-3">
-                                            <input id="street" formControlName="street" type="text" class="form-control" required />
-                                            <label for="street" class="form-label">rua</label>
-                                            <div *ngIf="addressStreet?.invalid && (addressStreet?.dirty || addressStreet?.touched)">
-                                                <small *ngIf="addressStreet?.errors??['required']">rua é obrigatório.</small>
-                                            </div>
-                                        </div>
-                                    </div>
-            
-                                    <div class="col-12">
-                                        <div class="form-floating mb-3">
-                                            <input id="number" formControlName="number" type="text" class="form-control" required/>
-                                            <label for="number" class="form-label">número</label>
-                                            <div *ngIf="addressNumber?.invalid && (addressNumber?.dirty || addressNumber?.touched)">
-                                                <small *ngIf="addressNumber?.errors??['required']">número é obrigatório.</small>
-                                            </div>
-                                        </div>
-                                    </div>
-            
-                                    <div class="col-12">
-                                        <div class="form-floating mb-3">
-                                            <input id="complement" formControlName="complement" type="text" class="form-control" /> 
-                                            <label for="complement" class="form-label">complemento</label>
-                                        </div>
-                                    </div>
-                                    <button type="submit" class="btn btn-primary btn-lg w-100" (click)="onSubmit()" [disabled]="(userForm.invalid || addressForm.invalid)">cadastrar</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-    </div>
 </div>

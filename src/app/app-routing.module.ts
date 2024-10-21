@@ -21,6 +21,7 @@ const routes: Routes = [
   
   {path: 'auth/cadastro', component: RegisterComponent},
   {path: 'auth/login', component: LoginComponent},
+  {path: 'auth/login/:email', component: LoginComponent},
   {
     path: 'cliente',
     component: ClientParentLayoutComponent,

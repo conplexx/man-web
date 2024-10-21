@@ -87,7 +87,9 @@ export class RegisterComponent {
     }
 
     toggleUserForm() {
-        this.isUserForm = false;
+        if(!this.userForm.invalid){
+            this.isUserForm = false;
+        }
     }
 
     onCepChange(): void {
@@ -126,7 +128,7 @@ export class RegisterComponent {
         this.authService.registerClient(userDto)
             .subscribe((response: BaseResponse<Client>) => {
                 if(response.type === BaseResponseType.DATA){
-                    this.router.navigate(['/auth/login']);
+                    this.router.navigate(['/auth/login', userDto.email]);
                 }
                 if(response.type === BaseResponseType.ERROR){
                     const errorResponse = response as ErrorResponse;
