@@ -1,7 +1,7 @@
 import { Client } from "./client.model";
 import { EquipmentCategory } from "./equipment-category.model";
 import { OrderStep } from "./order.model";
-import { ClientOrderState } from "../enum/client-order-state";
+import { OrderState } from "../enum/order-state";
 
 export class EmployeeOrder {
     constructor(
@@ -11,7 +11,7 @@ export class EmployeeOrder {
         public equipmentCategory: EquipmentCategory,
         public equipmentDescription: string,
         public failureDescription: string,
-        public state: ClientOrderState,
+        public state: OrderState,
         public steps: OrderStep[]
     ) {}
 }

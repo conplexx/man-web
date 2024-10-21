@@ -12,6 +12,3 @@ export class Employee {
         public birthday: Date
     ) {}
 }
-
-export type EmployeeResponse = HttpResponse<Employee>;
-export type EmployeesResponse = HttpResponse<Employee[]>;

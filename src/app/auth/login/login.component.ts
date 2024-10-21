@@ -19,6 +19,25 @@ import { authTokenKey, refreshTokenKey, userKey, userRoleKey } from '../../model
 
 export class LoginComponent {
     form: FormGroup;
+    gifSrc: string;
+
+    private gifs: string[] = [
+        'assets/1.gif',
+        'assets/2.gif',
+        'assets/3.gif',
+        'assets/4.gif',
+        'assets/5.gif',
+        'assets/6.gif',
+        'assets/7.gif',
+        'assets/8.gif',
+        'assets/9.gif',
+        'assets/10.gif',
+        'assets/11.gif',
+        'assets/12.gif',
+        'assets/13.gif',
+        'assets/14.gif',
+      ];
+    
     
     constructor(
         private authService: AuthService,
@@ -29,6 +48,7 @@ export class LoginComponent {
             email:  ['', [Validators.required, Validators.email]],
             password:  ['', [Validators.required, Validators.minLength(4), Validators.maxLength(4)]],
         });
+        this.gifSrc = this.gifs[Math.floor(Math.random() * this.gifs.length)];
     }
 
     get email() {
@@ -62,10 +82,6 @@ export class LoginComponent {
                 }
             }
         });
-    }
-
-    navigateToRegister() {
-        this.router.navigate(['auth/cadastro']);
     }
 }
 

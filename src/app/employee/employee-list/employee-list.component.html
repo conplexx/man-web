@@ -1,1 +1,33 @@
-<p>employee-list works!</p>
+<div class="container mt-4">
+    <h2>funcionários</h2>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>nome</th>
+                <th>email</th>
+                <th>cpf</th>
+                <th>nascimento</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let employee of employees, let i = index">
+                <td class="align-middle">{{ employee.name }}</td>
+                <td class="align-middle">{{ employee.email }}</td>
+                <td class="align-middle">{{ employee.cpf }}</td>
+                <td class="align-middle">{{ employee.birthday | date: 'dd/MM/yyyy HH:mm'}}</td>
+                <td class="align-middle">
+                    <button class="btn btn-primary" (click)="editEmployee(employee)">
+                        editar funcionário
+                    </button>
+                </td>
+                <td class="align-middle">
+                    <button class="btn btn-danger" (click)="deleteEmployee(employee.id)">
+                        excluir funcionário
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

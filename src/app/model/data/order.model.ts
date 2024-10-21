@@ -1,4 +1,4 @@
-import { ClientOrderState } from "../enum/client-order-state";
+import { OrderState } from "../enum/order-state";
 import { Budget } from "./budget.model";
 import { EquipmentCategory } from "./equipment-category.model";
 
@@ -9,7 +9,7 @@ export class Order {
         public equipmentCategory: EquipmentCategory,
         public equipmentDescription: string,
         public failureDescription: string,
-        public state: ClientOrderState,
+        public state: OrderState,
         public steps: OrderStep[]
     ) {}
 }
@@ -19,7 +19,7 @@ export class OrderStep {
     constructor (
         public id: string,
         public orderId: string,
-        public state: ClientOrderState,
+        public state: OrderState,
         public date: Date,
         public employeeId: string,
         public maintananceId?: string,

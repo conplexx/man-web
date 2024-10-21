@@ -45,7 +45,7 @@ export class NewOrderComponent {
     }
     
     onSubmit() {
-        if(this.form.invalid || !this.equipmentCategoryId) return;
+        if(!this.equipmentCategoryId) return;
         const form = this.form.value;
         const orderDto: ClientOrderDto = {
             equipmentDescription: form.equipmentDescription,

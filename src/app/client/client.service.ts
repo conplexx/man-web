@@ -11,8 +11,7 @@ import { Order } from '../model/data/order.model';
 })
 export class ClientService {
   url = 'http://localhost:8080/api/cliente';
-  homeUrl = `${this.url}/home`;
-  orderUrl = `${this.url}/manutencao`;
+  orderUrl = `${this.url}/pedido`;
   equipmentCategoriesUrl = `${this.url}/categorias-de-equipamento`;
 
   httpOptions = {
@@ -22,7 +21,7 @@ export class ClientService {
   constructor(private http: HttpClient) {}
 
   getHome(): Observable<BaseResponse<Order[]>> {
-    return this.http.get<BaseResponse<Order[]>>(this.homeUrl, this.httpOptions).pipe(retry(1), catchError(this.handleError));
+    return this.http.get<BaseResponse<Order[]>>(this.orderUrl, this.httpOptions).pipe(retry(1), catchError(this.handleError));
   }
 
   postOrder(clientOrderDto: ClientOrderDto): Observable<BaseResponse<Order>> {

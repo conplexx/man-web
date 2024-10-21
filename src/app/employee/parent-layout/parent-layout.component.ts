@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
 import { Employee } from '../../model/data/employee.model';
 import { userKey } from '../../model/data/local-storage-keys';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../../auth/auth.service';
+import { EmptyResponse } from '../../model/response/base-response';
 
 @Component({
   selector: 'employee-app-parent-layout',
@@ -14,7 +16,7 @@ import { CommonModule } from '@angular/common';
 export class EmployeeParentLayoutComponent {
     employee?: Employee;
 
-    constructor() {
+    constructor(private authService: AuthService, private router: Router) {
         this.getEmployee();
     }
 
@@ -23,5 +25,12 @@ export class EmployeeParentLayoutComponent {
         if (user) {
             this.employee = JSON.parse(user) as Employee;
         }
+    }
+
+    logout() {
+        this.authService.logout().subscribe((res: EmptyResponse) => {
+            console.log('logout');
+        });
+        this.router.navigate(['auth/login']);
     }
 }

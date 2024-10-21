@@ -23,6 +23,7 @@ import { AuthService } from '../auth.service';
 export class RegisterComponent {
     userForm: FormGroup;
     addressForm: FormGroup;
+    isUserForm: boolean = true;
     
     constructor(private authService: AuthService, private formBuilder: FormBuilder, private router: Router) {
         this.userForm = this.formBuilder.group({
@@ -85,23 +86,25 @@ export class RegisterComponent {
         return this.addressForm.get('city');
     }
 
+    toggleUserForm() {
+        this.isUserForm = false;
+    }
+
     onCepChange(): void {
-        this.authService.getCepInfo(this.getUnmaskedZipCode()).subscribe((data?: ViaCepResponse) => {
-            if(data){
-                this.addressForm.patchValue({
-                    state: data.uf,
-                    city: data.localidade,
-                    neighborhood: data.bairro,
-                    street: data.logradouro,
-                });
-            }
+        this.authService.getCepInfo(this.getUnmaskedZipCode())
+            .subscribe((data?: ViaCepResponse) => {
+                if(data){
+                    this.addressForm.patchValue({
+                        state: data.uf,
+                        city: data.localidade,
+                        neighborhood: data.bairro,
+                        street: data.logradouro,
+                    });
+                }
         });
     }
 
     onSubmit() {
-        if(!this.addressForm.valid || !this.userForm.valid){
-            return;
-        }
         const addressForm = this.addressForm.value;
         const addressDto = new AddressDto(
             addressForm.zipCode,
@@ -120,14 +123,15 @@ export class RegisterComponent {
             userForm.phone,
             addressDto
         );
-        this.authService.registerClient(userDto).subscribe((response: BaseResponse<Client>) => {
-            if(response instanceof DataResponse){
-                const { data: client } = response; //TODO PERSISTIR CLIENTE
-                this.router.navigate(['/auth/login']);
-            }
-            if(response instanceof ErrorResponse){
-                console.log(response.errorMessage);
-            }
+        this.authService.registerClient(userDto)
+            .subscribe((response: BaseResponse<Client>) => {
+                if(response.type === BaseResponseType.DATA){
+                    this.router.navigate(['/auth/login']);
+                }
+                if(response.type === BaseResponseType.ERROR){
+                    const errorResponse = response as ErrorResponse;
+                    console.error(errorResponse.errorMessage);
+                }
         });
     }
 }

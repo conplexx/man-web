@@ -1,7 +1,7 @@
 <div *ngIf="order">
     <h2>Order Details</h2>
     
-    <p><strong>Data:</strong> {{ order.date | date:'short' }}</p>
+    <p><strong>Data:</strong> {{ order.date | date: 'dd/MM/yyyy HH:mm' }}</p>
     <p><strong>Categoria do equipamento:</strong> {{ order.equipmentCategory }}</p>
     <p><strong>Descrição do equipamento:</strong> {{ order.equipmentDescription }}</p>
     <p><strong>Estado:</strong> {{ order.state }}</p>

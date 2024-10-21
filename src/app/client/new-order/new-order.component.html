@@ -1,12 +1,12 @@
 <div class="container mt-4">
     <div class="row">
         <div class="col-md-6">
-            <h2>Solicitação de Manutenção</h2>
+            <h2 style="padding-bottom: 20px;">nova manutenção</h2>
             <form [formGroup]="form">
                 <div class="mb-3">
-                    <label for="equipmentCategory" class="form-label">Categoria do equipamento</label>
-                </div>
-                <div class="mb-3">
+                    <div>
+                        <label for="equipmentCategory" class="form-label">categoria do equipamento</label>
+                    </div>
                     <select (change)="onEquipmentCategoryChange($event)">
                         <option *ngFor="let category of equipmentCategories" [value]="category.id">
                             {{ category.name }}
@@ -14,22 +14,22 @@
                     </select>
                 </div>
                 <div class="mb-3">
-                    <label for="equipmentDescription" class="form-label">Descrição do equipamento</label>
+                    <label for="equipmentDescription" class="form-label">descrição do equipamento</label>
                     <input id="equipmentDescription" formControlName="equipmentDescription" type="text" class="form-control" />
-                </div>
-                <div *ngIf="equipmentDescription?.invalid && (equipmentDescription?.dirty || equipmentDescription?.touched)">
-                    <small *ngIf="equipmentDescription?.errors??['required']">A descrição do equipamento é obrigatória.</small>
+                    <div *ngIf="equipmentDescription?.invalid && (equipmentDescription?.dirty || equipmentDescription?.touched)">
+                        <small *ngIf="equipmentDescription?.errors??['required']">a descrição do equipamento é obrigatória.</small>
+                    </div>
                 </div>
 
                 <div class="mb-3">
-                    <label for="failureDescription" class="form-label">Descrição do problema</label>
+                    <label for="failureDescription" class="form-label">descrição do problema</label>
                     <input id="failureDescription" formControlName="failureDescription" type="text" class="form-control" />
-                </div>
-                <div *ngIf="failureDescription?.invalid && (failureDescription?.dirty || failureDescription?.touched)">
-                    <small *ngIf="failureDescription?.errors??['required']">A descrição do problema é obrigatória.</small>
+                    <div *ngIf="failureDescription?.invalid && (failureDescription?.dirty || failureDescription?.touched)">
+                        <small *ngIf="failureDescription?.errors??['required']">a descrição do problema é obrigatória.</small>
+                    </div>
                 </div>
 
-                <button type="submit" class="btn btn-primary" (click)="onSubmit()" [disabled]="(form.invalid || equipmentCategoryId === undefined)">Cadastrar</button>
+                <button type="submit" class="btn btn-primary" (click)="onSubmit()" [disabled]="(form.invalid || equipmentCategoryId === undefined)">cadastrar</button>
             </form>
         </div>
     </div>

@@ -1,0 +1,49 @@
+.center{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.state-label{
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 90%;
+}
+
+.gray {
+    background-color: #6c757d;
+}
+
+.brown {
+    background-color: #8B4513;
+}
+
+.red {
+    background-color: #dc3545;
+}
+
+.yellow {
+    background-color: #ffc107;
+}
+
+.purple {
+    background-color: #6f42c1;
+}
+
+.blue {
+    background-color: #17a2b8;
+}
+
+.orange {
+    background-color: #fd7e14;
+}
+
+.green {
+    background-color: #28a745;
+}
+  
+.purple {
+    background-color: #6f42c1;
+}

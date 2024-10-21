@@ -1,4 +1,4 @@
-export enum EmployeeOrderFilterDateType {
+export enum EmployeeOrderFilterType {
     TODAY = "TODAY",
     DATE_PERIOD = "DATE_PERIOD",
     ALL = "ALL"
@@ -6,7 +6,7 @@ export enum EmployeeOrderFilterDateType {
 
 export class EmployeeOrderPeriodFilter {
     constructor(
-        public dateType: EmployeeOrderFilterDateType.DATE_PERIOD,
+        public filterType: EmployeeOrderFilterType.DATE_PERIOD,
         public startDate: Date,
         public endDate: Date,
     ) { }
@@ -14,7 +14,7 @@ export class EmployeeOrderPeriodFilter {
 
 export class EmployeeOrderSimpleFilter {
     constructor(
-        public dateType: EmployeeOrderFilterDateType.TODAY | EmployeeOrderFilterDateType.ALL,
+        public filterType: EmployeeOrderFilterType.TODAY | EmployeeOrderFilterType.ALL,
     ) { }
 }
 

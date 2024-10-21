@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { ClientOrderState } from '../../model/enum/client-order-state';
-import { BaseResponseType, DataResponse } from '../../model/response/base-response';
+import { OrderState, getOrderStateLabel } from '../../model/enum/order-state';
+import { BaseResponse, BaseResponseType, DataResponse } from '../../model/response/base-response';
 import { Order } from '../../model/data/order.model';
 import { ClientService } from '../client.service';
 import { ClientHomeAction } from '../../model/enum/client-home-action';
@@ -16,26 +16,27 @@ import { CommonModule } from '@angular/common';
 
 export class ClientHomeComponent {
   orders: Order[] = [];
+  actions: ClientHomeAction[] = [];
 
   constructor(private clientService: ClientService) {
-    this.clientService.getHome().subscribe(res => {
+    this.clientService.getHome().subscribe((res: BaseResponse<Order[]>) => {
         if(res.type === BaseResponseType.DATA) {
-          console.log('homeOrders', this.orders )
           const dataRes = res as DataResponse<Order[]>;
           this.orders = dataRes.data;
+          this.actions = this.orders.map(order => this.getClientHomeAction(order.state));
         }
     });
   }
 
-  getClientHomeAction(state: ClientOrderState): ClientHomeAction {
+  getClientHomeAction(state: OrderState): ClientHomeAction {
     switch(state){
-      case ClientOrderState.BUDGETED:
+      case OrderState.BUDGETED:
         return ClientHomeAction.APPROVE_OR_REJECT;
-      case ClientOrderState.APPROVED:
+      case OrderState.APPROVED:
         return ClientHomeAction.NO_ACTION;
-      case ClientOrderState.REJECTED:
+      case OrderState.REJECTED:
         return ClientHomeAction.REDEEM_SERVICE;
-      case ClientOrderState.FIXED:
+      case OrderState.FIXED:
         return ClientHomeAction.PAY_SERVICE;
       default:
         return ClientHomeAction.VIEW_ORDER;
@@ -68,5 +69,9 @@ export class ClientHomeComponent {
       case ClientHomeAction.PAY_SERVICE:
         //TODO pay
     }
+  }
+
+  getOrderStateLabel(state: OrderState): string {
+    return getOrderStateLabel(state);
   }
 }

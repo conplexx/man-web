@@ -4,7 +4,7 @@ import { catchError, Observable, retry, throwError } from 'rxjs';
 import { EmployeeBudgetDto } from '../model/dtos/employee-budget-dto';
 import { BaseResponse } from '../model/response/base-response';
 import { EmployeeFulfillMaintenanceDto } from '../model/dtos/employee-fulfill-maintenance-dto';
-import { EmployeeOrderFilter } from '../model/data/employee-order-filter.model';
+import { EmployeeOrderFilter, EmployeeOrderFilterType } from '../model/data/employee-order-filter.model';
 import { EmployeeRedirectMaintenanceDto } from '../model/dtos/employee-redirect-maintenance-dto';
 import { Employee } from '../model/data/employee.model';
 import { EquipmentCategory } from '../model/data/equipment-category.model';
@@ -19,11 +19,10 @@ export class EmployeeService {
   url = 'http://localhost:8080/api/funcionario';
   homeUrl = `${this.url}/home`;
   budgetUrl = `${this.url}/orcamento`;
-  ordersUrl = `${this.url}/solicitacoes`;
+  ordersUrl = `${this.url}/pedido`;
   fulfillMaintenanceUrl = `${this.url}/efetuar-manutencao`;
   redirectMaintenanceUrl = `${this.url}/redirecionar-manutencao`;
   equipmentCategoriesUrl = `${this.url}/categorias-de-equipamento`;
-  employeesUrl = `${this.url}/funcionarios`;
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -31,16 +30,37 @@ export class EmployeeService {
 
   constructor(private http: HttpClient) {}
 
+  getAllEmployees(): Observable<BaseResponse<Employee[]>> {
+    return this.http.get<BaseResponse<Employee[]>>(this.url, this.httpOptions).pipe(retry(1), catchError(this.handleError));
+  }
+
+  postEmployee(employeeDto: NewEmployeeDto): Observable<BaseResponse<Employee>> {
+    return this.http.post<BaseResponse<Employee>>(this.url, JSON.stringify(employeeDto), this.httpOptions).pipe(retry(1), catchError(this.handleError));
+  }
+
+  patchEmployee(employee: Employee): Observable<BaseResponse<Employee>> {
+    return this.http.patch<BaseResponse<Employee>>(`${this.url}/${employee.id}`, JSON.stringify(employee), this.httpOptions).pipe(retry(1), catchError(this.handleError));
+  }
+
+  deleteEmployee(employeeId: string): Observable<BaseResponse<Employee[]>> {
+    return this.http.delete<BaseResponse<Employee[]>>(`${this.url}/${employeeId}`, this.httpOptions).pipe(retry(1), catchError(this.handleError));
+  }
+
   getHome(): Observable<BaseResponse<EmployeeOrder[]>> {
     return this.http.get<BaseResponse<EmployeeOrder[]>>(this.homeUrl, this.httpOptions).pipe(retry(1), catchError(this.handleError));
   }
 
-  postBudget(employeeBudgetDto: EmployeeBudgetDto): Observable<BaseResponse<EmployeeOrder[]>> {
-    return this.http.post<BaseResponse<EmployeeOrder[]>>(this.budgetUrl, JSON.stringify(employeeBudgetDto), this.httpOptions).pipe(retry(1), catchError(this.handleError));
-  }
+//   postBudget(employeeBudgetDto: EmployeeBudgetDto): Observable<BaseResponse<EmployeeOrder[]>> {
+//     return this.http.post<BaseResponse<EmployeeOrder[]>>(this.budgetUrl, JSON.stringify(employeeBudgetDto), this.httpOptions).pipe(retry(1), catchError(this.handleError));
+//   }
 
   getOrders(orderFilter: EmployeeOrderFilter): Observable<BaseResponse<EmployeeOrder[]>> {
-    return this.http.post<BaseResponse<EmployeeOrder[]>>(this.ordersUrl, JSON.stringify(orderFilter), this.httpOptions).pipe(retry(1), catchError(this.handleError));
+    const dateFilter = orderFilter.filterType === EmployeeOrderFilterType.DATE_PERIOD ? `&startDate=${orderFilter.startDate}&endDate=${orderFilter.endDate}` : '';
+    return this.http.get<BaseResponse<EmployeeOrder[]>>(`${this.ordersUrl}?filterType=${orderFilter.filterType}${dateFilter}`, this.httpOptions).pipe(retry(1), catchError(this.handleError));
+  }
+
+  getOrder(orderId: string): Observable<BaseResponse<EmployeeOrder>> {
+    return this.http.get<BaseResponse<EmployeeOrder>>(`${this.ordersUrl}/${orderId}`, this.httpOptions).pipe(retry(1), catchError(this.handleError));
   }
 
   fulfillMaintenance(fulfillDto: EmployeeFulfillMaintenanceDto): Observable<BaseResponse<EmployeeOrder>> {
@@ -51,7 +71,7 @@ export class EmployeeService {
     return this.http.post<BaseResponse<EmployeeOrder>>(this.redirectMaintenanceUrl, JSON.stringify(redirectDto), this.httpOptions).pipe(retry(1), catchError(this.handleError));
   }
 
-  getEquipmentCategories(): Observable<BaseResponse<EquipmentCategory[]>> {
+  getAllEquipmentCategories(): Observable<BaseResponse<EquipmentCategory[]>> {
     return this.http.get<BaseResponse<EquipmentCategory[]>>(this.equipmentCategoriesUrl, this.httpOptions).pipe(retry(1), catchError(this.handleError));
   }
 
@@ -65,22 +85,6 @@ export class EmployeeService {
 
   deleteEquipmentCategory(categoryId: string): Observable<BaseResponse<EquipmentCategory[]>> {
     return this.http.delete<BaseResponse<EquipmentCategory[]>>(`${this.equipmentCategoriesUrl}/${categoryId}`, this.httpOptions).pipe(retry(1), catchError(this.handleError));
-  }
-
-  getAllEmployees(): Observable<BaseResponse<Employee[]>> {
-    return this.http.get<BaseResponse<Employee[]>>(this.employeesUrl, this.httpOptions).pipe(retry(1), catchError(this.handleError));
-  }
-
-  postEmployee(employeeDto: NewEmployeeDto): Observable<BaseResponse<Employee>> {
-    return this.http.post<BaseResponse<Employee>>(this.employeesUrl, JSON.stringify(employeeDto), this.httpOptions).pipe(retry(1), catchError(this.handleError));
-  }
-
-  patchEmployee(employee: Employee): Observable<BaseResponse<Employee>> {
-    return this.http.patch<BaseResponse<Employee>>(`${this.employeesUrl}/${employee.id}`, JSON.stringify(employee), this.httpOptions).pipe(retry(1), catchError(this.handleError));
-  }
-
-  deleteEmployee(employeeId: string): Observable<BaseResponse<Employee[]>> {
-    return this.http.delete<BaseResponse<Employee[]>>(`${this.employeesUrl}/${employeeId}`, this.httpOptions).pipe(retry(1), catchError(this.handleError));
   }
 
   handleError(error: HttpErrorResponse) {

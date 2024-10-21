@@ -1,1 +1,51 @@
-<p>employee-crud works!</p>
+<div class="container mt-4">
+    <div class="col-md-6">
+        <h2 *ngIf="creating; else editing">Novo funcionário</h2>
+        <ng-template #editing>
+            <h2>Editar funcionário</h2>
+        </ng-template>
+        <form [formGroup]="form">
+            <div class="mb-3">
+                <label for="cpf" class="form-label">CPF</label>
+                <input id="cpf" formControlName="cpf" type="text" class="form-control" mask="000.000.000-00" />
+                <div *ngIf="employeeCpf?.invalid && (employeeCpf?.dirty || employeeCpf?.touched)">
+                    <small *ngIf="employeeCpf?.errors??['required']">CPF é obrigatório.</small>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="name" class="form-label">Nome</label>
+                <input id="name" formControlName="name" type="text" class="form-control" />
+                <div *ngIf="employeeName?.invalid && (employeeName?.dirty || employeeName?.touched)">
+                    <small *ngIf="employeeName?.errors??['required']">Nome é obrigatório.</small>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="email" class="form-label">E-mail</label>
+                <input id="email" formControlName="email" type="email" class="form-control" />
+                <div *ngIf="employeeEmail?.invalid && (employeeEmail?.dirty || employeeEmail?.touched)">
+                    <small *ngIf="employeeEmail?.errors??['required']">E-mail é obrigatório. </small>
+                    <small *ngIf="employeeEmail?.errors??['email']">E-mail inválido.</small>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="phone" class="form-label">Telefone</label>
+                <input id="phone" formControlName="phone" type="text" class="form-control" mask="(00)00000-0000" />
+                <div *ngIf="employeePhone?.invalid && (employeePhone?.dirty || employeePhone?.touched)">
+                    <small *ngIf="employeePhone?.errors??['required']">Telefone é obrigatório.</small>
+                </div>
+            </div>
+
+            <!-- <div class="mb-3" *ngIf="creating">
+                <label for="password" class="form-label">Senha</label>
+                <input id="password" formControlName="password" type="password" class="form-control" maxlength="4" />
+                <div *ngIf="password?.invalid && (password?.dirty || password?.touched)">
+                    <small *ngIf="password?.errors??['required']">Senha é obrigatória.</small>
+                </div>
+            </div> -->
+            <button class="btn btn-primary" (click)="onSubmit()" [disabled]="form.invalid">Salvar</button>
+        </form>
+    </div>
+</div>

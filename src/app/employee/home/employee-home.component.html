@@ -1,22 +1,29 @@
 <div class="container mt-4">
-    <h2>Solicitações em aberto</h2>
+    <h2>solicitações em aberto</h2>
     <table class="table table-striped">
-      <thead>
-        <tr>
-          <th>Data</th>
-          <th>Nome do cliente</th>
-          <th>Descrição do equipamento</th>
-          <th>Descrição da falha</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let order of orders">
-          <td>{{ order.date | date: 'short' }}</td>
-          <td>{{ order.client.name }}</td>
-          <td>{{ order.equipmentDescription }}</td>
-          <td>{{ order.failureDescription }}</td>
-          <td>{{ order.equipmentCategory }}</td>
-        </tr>
-      </tbody>
+        <thead>
+            <tr>
+                <th>data</th>
+                <th>nome do cliente</th>
+                <th>categoria do equipamento</th>
+                <th>descrição do equipamento</th>
+                <th>descrição da falha</th>
+                <th>ação</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let order of orders, let i = index">
+                <td>{{ order.date | date: 'dd/MM/yyyy HH:mm' }}</td>
+                <td>{{ order.client.name }}</td>
+                <td>{{ order.equipmentCategory.name }}</td>
+                <td>{{ order.equipmentDescription }}</td>
+                <td>{{ order.failureDescription }}</td>
+                <td>
+                    <button class="btn btn-primary" (click)="goToOrder(order.id)">
+                        efetuar orçamento
+                    </button>
+                </td>
+            </tr>
+        </tbody>
     </table>
-  </div>
+</div>

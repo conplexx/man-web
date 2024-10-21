@@ -4,7 +4,7 @@ import { Client } from '../../model/data/client.model';
 import { EmployeeService } from '../employee.service';
 import { ActivatedRoute } from '@angular/router';
 import { EmployeeBudgetDto } from '../../model/dtos/employee-budget-dto';
-import { BaseResponse, DataResponse } from '../../model/response/base-response';
+import { BaseResponse, BaseResponseType, DataResponse } from '../../model/response/base-response';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -18,19 +18,30 @@ export class AnalyseOrderComponent {
     order?: EmployeeOrder;
 
     constructor(private employeeService: EmployeeService, private route: ActivatedRoute) {
-        this.route.data.subscribe(data => {
-            if(data){
-                this.order = data as EmployeeOrder;
+        this.getOrder();
+    }
+
+    getOrder() {
+        this.route.paramMap.subscribe(params => {
+            const orderId = params.get('orderId');
+            if (orderId) {
+                this.employeeService.getOrder(orderId).subscribe((res: BaseResponse<EmployeeOrder>) => {
+                    if(res.type === BaseResponseType.DATA){
+                        const dataRes = res as DataResponse<EmployeeOrder>;
+                        this.order = dataRes.data;
+                    }
+                });
             }
         });
     }
 
     produceBudget(budgetDto: EmployeeBudgetDto) {
-        this.employeeService.postBudget(budgetDto).subscribe((res: BaseResponse<EmployeeOrder[]>) => {
-            if(res instanceof DataResponse){
-                //TODO
-            }
-        });
+        // this.employeeService.postBudget(budgetDto).subscribe((res: BaseResponse<EmployeeOrder>) => {
+        //     if(res.type === BaseResponseType.DATA){
+        //         const dataRes = res as DataResponse<EmployeeOrder>;
+        //         this.order = dataRes.data;
+        //     }
+        // });
     }
 
 }

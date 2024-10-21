@@ -2,8 +2,9 @@ import { Component } from '@angular/core';
 import { EmployeeService } from '../employee.service';
 import { BaseResponse, BaseResponseType, DataResponse } from '../../model/response/base-response';
 import { EmployeeOrder } from '../../model/data/employee-order.model';
-import { EmployeeBudgetDto } from '../../model/dtos/employee-budget-dto';
 import { CommonModule } from '@angular/common';
+import { getOrderStateLabel, OrderState } from '../../model/enum/order-state';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -16,12 +17,20 @@ import { CommonModule } from '@angular/common';
 export class EmployeeHomeComponent {
     orders: EmployeeOrder[] = [];
 
-    constructor(private employeeService: EmployeeService) {
+    constructor(private employeeService: EmployeeService, private router: Router) {
         this.employeeService.getHome().subscribe((res: BaseResponse<EmployeeOrder[]>) => {
             if(res.type === BaseResponseType.DATA){
                 const dataRes = res as DataResponse<EmployeeOrder[]>;
                 this.orders = dataRes.data;
             }
         });
+    }
+
+    goToOrder(orderId: string) {
+        this.router.navigate(['/funcionario/analisar-pedido', orderId]);
+    }
+
+    getOrderStateLabel(state: OrderState): string {
+        return getOrderStateLabel(state);
     }
 }
