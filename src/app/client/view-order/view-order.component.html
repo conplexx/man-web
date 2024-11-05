@@ -6,14 +6,64 @@
     <p><strong>Descrição do equipamento:</strong> {{ order.equipmentDescription }}</p>
     <p><strong>Estado:</strong> {{ order.state }}</p>
     
-    <h3>Steps</h3>
-    <ul>
-      <li *ngFor="let step of order.steps">
-        <!-- <p><strong>Step:</strong> {{ step. }}</p> -->
-      </li>
-    </ul>
+    <h3>Passos da solicitação</h3>
+        <div class="col-md-4" *ngFor="let step of order.steps; let i = index">
+          <div class="card mb-4">
+              <div class="card-body">
+                  <h1>Passo {{i+1}}</h1>
+                  <div class="form-group mb-3">
+                    <ng-container *ngIf="step.state === allOrderStates.OPEN; else budgetTemplate">
+                      <span>open</span>
+                    </ng-container>
+                    <ng-template #budgetTemplate>
+                      <ng-container *ngIf="step.state === allOrderStates.BUDGETED; else rejectedTemplate">
+                        <span>budgeted</span>
+                      </ng-container>
+                    </ng-template>
+                    <ng-template #rejectedTemplate>
+                      <ng-container *ngIf="step.state === allOrderStates.REJECTED; else approvedTemplate">
+                        <span>rejected</span>
+                      </ng-container>
+                    </ng-template>
+                    <ng-template #approvedTemplate>
+                      <ng-container *ngIf="step.state === allOrderStates.APPROVED; else redirectedTemplate">
+                        <span>approved</span>
+                      </ng-container>
+                    </ng-template>
+                    <ng-template #redirectedTemplate>
+                      <ng-container *ngIf="step.state === allOrderStates.REDIRECTED; else fixedTemplate">
+                        <span>redirected</span>
+                      </ng-container>
+                    </ng-template>
+                    <ng-template #fixedTemplate>
+                      <ng-container *ngIf="step.state === allOrderStates.FIXED; else payedTemplate">
+                        <span>fixed</span>
+                      </ng-container>
+                    </ng-template>
+                    <ng-template #payedTemplate>
+                      <ng-container *ngIf="step.state === allOrderStates.PAYED; else finalizedTemplate">
+                        <span>payed</span>
+                      </ng-container>
+                    </ng-template>
+                    <ng-template #finalizedTemplate>
+                      <ng-container *ngIf="step.state === allOrderStates.FINALIZED">
+                        <span>finalized</span>
+                      </ng-container>
+                    </ng-template>
+                  </div>
+              </div>
+          </div>
   </div>
   
-  <div *ngIf="!order">
-    <p>Loading order details...</p>
-  </div>
+  <!-- export class OrderStep {
+    constructor (
+        public id: string,
+        public orderId: string,
+        public state: OrderState,
+        public date: Date,
+        public employeeId: string,
+        public maintananceId?: string,
+        public clientRejectedReason?: string,
+        public budget?: Budget
+    ) {}
+} -->

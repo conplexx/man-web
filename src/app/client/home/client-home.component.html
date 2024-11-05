@@ -19,9 +19,12 @@
                 <td class="align-middle">{{ order.failureDescription }}</td>
                 <td class="align-middle">{{ getOrderStateLabel(order.state) }}</td>
                 <td class="align-middle">
-                    <button class="btn btn-primary" (click)="performAction(order.id, actions[i])">
+                    <button class="btn btn-primary" 
+                        (click)="performAction(order.id, actions[i])"
+                        *ngIf="actions[i] !== allClientActions.NO_ACTION"
+                    >
                         {{getActionButtonLabel(actions[i])}}
-                    </button>   
+                    </button>
                 </td>
             </tr>
         </tbody>

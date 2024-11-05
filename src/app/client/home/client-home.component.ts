@@ -5,11 +5,12 @@ import { Order } from '../../model/data/order.model';
 import { ClientService } from '../client.service';
 import { ClientHomeAction } from '../../model/enum/client-home-action';
 import { CommonModule } from '@angular/common';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'client-home',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './client-home.component.html',
   styleUrl: './client-home.component.css'
 })
@@ -17,8 +18,9 @@ import { CommonModule } from '@angular/common';
 export class ClientHomeComponent {
   orders: Order[] = [];
   actions: ClientHomeAction[] = [];
+  allClientActions = ClientHomeAction;
 
-  constructor(private clientService: ClientService) {
+  constructor(private clientService: ClientService, private router: Router) {
     this.clientService.getHome().subscribe((res: BaseResponse<Order[]>) => {
         if(res.type === BaseResponseType.DATA) {
           const dataRes = res as DataResponse<Order[]>;
@@ -61,13 +63,14 @@ export class ClientHomeComponent {
   performAction(orderId: string, action: ClientHomeAction) {
     switch(action){
       case ClientHomeAction.APPROVE_OR_REJECT:
+        break;
       case ClientHomeAction.VIEW_ORDER:
-        //TODO ir pra pagina
+        this.router.navigate(['/cliente/visualizar-pedido', orderId]);
         break;
       case ClientHomeAction.REDEEM_SERVICE:
-        //TODO redeem
+        break;
       case ClientHomeAction.PAY_SERVICE:
-        //TODO pay
+        break;
     }
   }
 

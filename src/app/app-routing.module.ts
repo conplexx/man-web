@@ -28,7 +28,7 @@ const routes: Routes = [
     children: [
       {path: 'home', component: ClientHomeComponent, canActivate: [authGuard]},
       {path: 'novo-pedido', component: NewOrderComponent, canActivate: [authGuard]},
-      {path: 'visualizar-pedido', component: ViewOrderComponent, canActivate: [authGuard]},
+      {path: 'visualizar-pedido/:orderId', component: ViewOrderComponent, canActivate: [authGuard]},
     ]
   },
   {
